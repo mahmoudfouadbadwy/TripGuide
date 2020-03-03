@@ -36,7 +36,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpContract.
         signupBtn = findViewById(R.id.signUpButton) ;
 
         //Define singupPresenter
-        signUpPresenter = new SignUpPresenter();
+        signUpPresenter = new SignUpPresenter(this);
 
 
         //Button clicked
@@ -48,8 +48,6 @@ public class SignUpActivity extends AppCompatActivity implements SignUpContract.
                 boolean emailValid = validateEmail(mailTxt.getText().toString().trim());
                 boolean passwordValil = validatePassword(passwordTxt.getText().toString().trim());
                 boolean conformPasswordValid = validateConfirmPassword(conformPasswordTxt.getText().toString().trim());
-
-
                 makeValidation(passwordValil ,conformPasswordValid ,nameValid ,emailValid);
 
             }
@@ -99,24 +97,17 @@ public class SignUpActivity extends AppCompatActivity implements SignUpContract.
     public boolean validateConfirmPassword(String confirmPassword) {
         boolean check  = false ;
 
-        if(confirmPassword.length() >= 6){
-            check = true ;
+        if(passwordTxt.getText().toString().equals(confirmPassword))
+        {
+            check = true;
         }
 
         return check;
     }
 
-
     void makeValidation(boolean password , boolean conformPassword ,boolean name ,boolean email ){
         if(password == true && conformPassword == true && name == true && email == true){
-
-            if(passwordTxt.getText().toString().equals(conformPasswordTxt.getText().toString())){
-                signUpPresenter.signUp(mailTxt.getText().toString() , passwordTxt.getText().toString() ,nameTxt.getText().toString());
-            }else{
-                Toast.makeText(this,"password Error",Toast.LENGTH_SHORT).show();
-            }
-        }else{
-             Toast.makeText(this,"enter all data",Toast.LENGTH_SHORT).show();
+            signUpPresenter.signUp(mailTxt.getText().toString() , passwordTxt.getText().toString() ,nameTxt.getText().toString());
         }
 
     }

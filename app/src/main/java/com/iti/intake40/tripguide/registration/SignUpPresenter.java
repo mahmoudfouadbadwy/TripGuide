@@ -6,20 +6,26 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import java.util.concurrent.Executor;
+
 
 public class SignUpPresenter implements SignUpContract.SignUpPresenter {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser user;
     private UserProfileChangeRequest profileUpdates;
+    private SignUpActivity context;
     private boolean status = false;
+
+    public SignUpPresenter(SignUpActivity context)
+    {
+        this.context = context;
+    }
     @Override
     public boolean signUp(String mail, String password, String name) {
         // Initialize Fire base Auth
         final String userName = name;
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.createUserWithEmailAndPassword(mail, password)
-                .addOnCompleteListener((Executor) this,new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(context,new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
