@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "105443000537",
+    "firebase_url": "https://trip-guide-dbb65.firebaseio.com",
+    "project_id": "trip-guide-dbb65",
+    "storage_bucket": "trip-guide-dbb65.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:105443000537:android:34119f27b4046f26467ec8",
+        "android_client_info": {
+          "package_name": "com.iti.intake40.tripguide"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "105443000537-rh025pe6pop0pb52er6d5uh191o133f2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgL0v4HnVLLvOycKGhgbBTW0esVcHIrRk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "105443000537-rh025pe6pop0pb52er6d5uh191o133f2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
