@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,9 @@ public class SignUpActivity extends AppCompatActivity implements SignUpContract.
     EditText passwordTxt ;
     EditText conformPasswordTxt ;
     Button signupBtn ;
+
+
+
 
     SignUpContract.SignUpPresenter signUpPresenter;
 
@@ -34,6 +38,9 @@ public class SignUpActivity extends AppCompatActivity implements SignUpContract.
         passwordTxt = findViewById(R.id.passwordText) ;
         conformPasswordTxt = findViewById(R.id.confirmText) ;
         signupBtn = findViewById(R.id.signUpButton) ;
+
+
+
 
         //Define singupPresenter
         signUpPresenter = new SignUpPresenter(this);
