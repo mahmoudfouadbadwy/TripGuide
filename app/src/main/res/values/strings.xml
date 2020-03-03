@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">TripGuide</string>
+    <string name="FullName">Full Name</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="ConfirmPassword">Confirm Password</string>
+    <string name="SignUp">Sign Up</string>
+    <string name="HaveAnAccount">Have an account ?</string>
+    <string name="Login"> Log In</string>
+    <string name="SignUpLogo">Sign Up</string>
+    <string name="SignUpTo">To</string>
+    <string name="SignUpLogo3" >Trip Guide</string>
+
 </resources>
