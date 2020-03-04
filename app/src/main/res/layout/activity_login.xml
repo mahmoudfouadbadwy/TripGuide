@@ -8,7 +8,7 @@
     android:background="@drawable/signup"
     android:orientation="vertical"
     android:weightSum="100"
-    tools:context=".registration.SignUpActivity"
+    tools:context=".login.Login"
     style="@style/SignUp" >
 
 
@@ -160,6 +160,7 @@
             android:clickable="true"
             android:longClickable="false"
 
+            android:onClick="goToSignUpActivity"
             android:padding="2dp"
             android:text="@string/signUp1"
             android:textColor="@android:color/holo_blue_bright"

@@ -2,6 +2,7 @@ package com.iti.intake40.tripguide.registration;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iti.intake40.tripguide.R;
+import com.iti.intake40.tripguide.login.Login;
 
 public class SignUpActivity extends AppCompatActivity implements SignUpContract.SignUpView {
 
@@ -19,8 +21,8 @@ public class SignUpActivity extends AppCompatActivity implements SignUpContract.
     EditText passwordTxt ;
     EditText conformPasswordTxt ;
     Button signupBtn ;
-
-
+    TextView loginLink;
+    Intent loginIntent;
 
 
     SignUpContract.SignUpPresenter signUpPresenter;
@@ -31,17 +33,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpContract.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState) ;
         setContentView(R.layout.activity_main) ;
-
-        // Define component
-        nameTxt = findViewById(R.id.nameText) ;
-        mailTxt = findViewById(R.id.mailText) ;
-        passwordTxt = findViewById(R.id.passwordText) ;
-        conformPasswordTxt = findViewById(R.id.confirmText) ;
-        signupBtn = findViewById(R.id.signUpButton) ;
-
-
-
-
+        setupView();
         //Define singupPresenter
         signUpPresenter = new SignUpPresenter(this);
 
@@ -61,7 +53,14 @@ public class SignUpActivity extends AppCompatActivity implements SignUpContract.
         });
 
 
-
+        loginLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginIntent = new Intent(SignUpActivity.this,Login.class);
+                startActivity(loginIntent);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -140,6 +139,18 @@ public class SignUpActivity extends AppCompatActivity implements SignUpContract.
            }
         }
 
+    }
+
+
+    private void setupView()
+    {
+        // Define component
+        nameTxt = findViewById(R.id.nameText) ;
+        mailTxt = findViewById(R.id.mailText) ;
+        passwordTxt = findViewById(R.id.passwordText) ;
+        conformPasswordTxt = findViewById(R.id.confirmText) ;
+        signupBtn = findViewById(R.id.signUpButton) ;
+        loginLink =findViewById(R.id.loginText);
     }
 
 }
