@@ -7,8 +7,19 @@
     <string name="SignUp">Sign Up</string>
     <string name="HaveAnAccount">Have an account ?</string>
     <string name="Login"> Log In</string>
-    <string name="SignUpLogo">Sign Up</string>
     <string name="SignUpTo">To</string>
     <string name="SignUpLogo3">Trip Guide</string>
+    <string name="SignUpLogo">Sign Up</string>
+    <string name="logIn">Log In</string>
+    <string name="account">Don\'t Have an Account ?</string>
+
+    <string name="password" />
+    <string name="passwordLogin">Password</string>
+    <string name="emailLogin">Email</string>
+    <string name="logo3">Trip Guide</string>
+    <string name="logo2">To</string>
+    <string name="logo1">Log In</string>
+    <string name="login1">Log In</string>
+    <string name="signUp1">Sign Up</string>
 
 </resources>
