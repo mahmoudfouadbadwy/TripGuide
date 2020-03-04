@@ -70,7 +70,11 @@ public class SignUpActivity extends AppCompatActivity implements SignUpContract.
         boolean check  = false ;
 
         if(name.isEmpty() == false){
+            nameTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.user,0);
             check = true ;
+        }
+        else{
+            nameTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.error,0);
         }
         return check;
     }
@@ -82,7 +86,11 @@ public class SignUpActivity extends AppCompatActivity implements SignUpContract.
 
         if (mail.matches(emailPattern) && mail.isEmpty()==false)
         {
+            mailTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.email,0);
             check = true;
+        }
+        else {
+            mailTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.error,0);
         }
 
         return check;
@@ -95,7 +103,12 @@ public class SignUpActivity extends AppCompatActivity implements SignUpContract.
         boolean check  = false ;
 
         if(password.length() >= 6){
+            passwordTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.password,0);
             check = true ;
+        }
+        else {
+            passwordTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.error,0);
+            Toast.makeText(SignUpActivity.this,"PassWord Must Be More Than 6 Char",Toast.LENGTH_LONG).show();
         }
         return check;
     }
@@ -106,7 +119,11 @@ public class SignUpActivity extends AppCompatActivity implements SignUpContract.
 
         if(passwordTxt.getText().toString().equals(confirmPassword))
         {
+            conformPasswordTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.confirm,0);
             check = true;
+        }
+        else {
+            conformPasswordTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.error,0);
         }
 
         return check;
@@ -114,7 +131,13 @@ public class SignUpActivity extends AppCompatActivity implements SignUpContract.
 
     void makeValidation(boolean password , boolean conformPassword ,boolean name ,boolean email ){
         if(password == true && conformPassword == true && name == true && email == true){
-            signUpPresenter.signUp(mailTxt.getText().toString() , passwordTxt.getText().toString() ,nameTxt.getText().toString());
+           if( signUpPresenter.signUp(mailTxt.getText().toString() , passwordTxt.getText().toString() ,nameTxt.getText().toString()))
+           {
+
+           }
+           else {
+               Toast.makeText(SignUpActivity.this,"Email Already Exist",Toast.LENGTH_LONG).show();
+           }
         }
 
     }

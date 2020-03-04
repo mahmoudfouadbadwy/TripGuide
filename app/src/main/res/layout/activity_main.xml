@@ -8,7 +8,9 @@
     android:background="@drawable/signup"
     android:orientation="vertical"
     android:weightSum="100"
-    tools:context=".registration.SignUpActivity">
+    tools:context=".registration.SignUpActivity"
+    style="@style/SignUp" >
+
 
     <LinearLayout
         android:id="@+id/topLevel"
