@@ -5,10 +5,10 @@ public interface LoginContract {
         public boolean validateEmail(String email);
         public boolean validatePassword(String password);
         public void goToHome();
+        public void displayError(String message);
     }
     public interface LoginPresenter{
-        public boolean loginWithEmail(String email,String password);
-        public boolean loginWithGoogle();
+        public void loginWithEmail(String email,String password);
         public void stop();
     }
 }

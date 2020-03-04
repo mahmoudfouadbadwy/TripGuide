@@ -130,9 +130,9 @@ public class SignUpActivity extends AppCompatActivity implements SignUpContract.
 
     void makeValidation(boolean password , boolean conformPassword ,boolean name ,boolean email ){
         if(password == true && conformPassword == true && name == true && email == true){
-           if( signUpPresenter.signUp(mailTxt.getText().toString() , passwordTxt.getText().toString() ,nameTxt.getText().toString()))
+           if( signUpPresenter.signUp(mailTxt.getText().toString(),passwordTxt.getText().toString(),nameTxt.getText().toString()))
            {
-
+                 // go to home
            }
            else {
                Toast.makeText(SignUpActivity.this,"Email Already Exist",Toast.LENGTH_LONG).show();

@@ -50,15 +50,7 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
             public void onClick(View v) {
                if (checkValidation())
                {
-                   if(presenter.loginWithEmail(email.getText().toString(),password.getText().toString()))
-                   {
-                       // go to home .
-                       Toast.makeText(Login.this,"Login",Toast.LENGTH_LONG).show();
-                   }
-                   else
-                   {
-                       Toast.makeText(Login.this,"Invalid Email Or Password",Toast.LENGTH_LONG).show();
-                   }
+                   presenter.loginWithEmail(email.getText().toString(),password.getText().toString());
                }
             }
         });
@@ -82,6 +74,7 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
         }
         else {
             this.email.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.error,0);
+            check  = false;
         }
         return check;
     }
@@ -97,6 +90,7 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
         else {
             this.password.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.error,0);
             Toast.makeText(Login.this,"PassWord Must Be More Than 6 Char",Toast.LENGTH_LONG).show();
+            check  = false;
         }
         return check;
     }
@@ -112,7 +106,12 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
     }
     @Override
     public void goToHome() {
+        Toast.makeText(Login.this,"Login",Toast.LENGTH_LONG).show();
+    }
 
+    @Override
+    public void displayError(String message) {
+        Toast.makeText(Login.this,message,Toast.LENGTH_LONG).show();
     }
 
     private void setupViews()
@@ -154,7 +153,6 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In was successful, authenticate with Firebase
-
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
@@ -182,5 +180,11 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
                         }
                     }
                 });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        presenter.stop();
     }
 }
