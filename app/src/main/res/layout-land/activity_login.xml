@@ -3,30 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
+    style="@style/SignUp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/signup"
-    android:orientation="vertical"
     android:weightSum="100"
-    tools:context=".login.Login"
-    style="@style/SignUp" >
+    tools:context=".login.Login">
 
 
     <LinearLayout
         android:id="@+id/topLevel"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="25"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="50"
         android:orientation="vertical"
-        android:weightSum="3">
+        android:weightSum="100">
 
         <TextView
 
             android:id="@+id/logo1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
 
+            android:layout_weight="30"
             android:gravity="center|bottom"
             android:text="@string/logo1"
             android:textColor="@android:color/white"
@@ -38,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:layout_weight="0.5"
+            android:layout_weight="3"
             android:gravity="center"
             android:text="@string/logo2"
             android:textColor="@android:color/white"
@@ -49,19 +48,78 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
 
+            android:layout_weight="3"
             android:gravity="center"
             android:text="@string/logo3"
             android:textColor="@android:color/white"
             android:textSize="24sp" />
+
+
+
+
+
+
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="60"
+            android:gravity="center_horizontal">
+
+            <LinearLayout
+                android:id="@+id/bottomLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+
+                <TextView
+
+                    android:id="@+id/accountText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/account"
+                    android:textAlignment="textEnd"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="18sp"
+                    tools:ignore="RtlCompat" />
+
+                <TextView
+
+                    android:id="@+id/signUpText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:longClickable="false"
+                    android:onClick="goToSignUpActivity"
+                    android:padding="2dp"
+                    android:text="@string/signUp1"
+                    android:textColor="@android:color/holo_blue_bright"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+
+
+
+
+
+
+
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/medLevel"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="65"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="50"
         android:orientation="vertical"
         android:weightSum="4">
 
@@ -71,7 +129,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
 
             android:layout_weight="1"
@@ -113,10 +171,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
 
             android:layout_marginRight="20dp"
-            android:layout_weight="0.85"
+            android:layout_weight="1"
             android:text="@string/logIn"
             android:textColor=" #b338b5 "
             android:textSize="18sp" />
@@ -126,45 +184,13 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="5dp"
-            android:layout_weight="0.85"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="1"
             app:buttonSize="wide"
             app:colorScheme="dark" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/bottomLevel"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="15"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-
-            android:id="@+id/accountText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/account"
-            android:textAlignment="textEnd"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="18sp"
-            tools:ignore="RtlCompat" />
-
-        <TextView
-
-            android:id="@+id/signUpText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:longClickable="false"
-            android:onClick="goToSignUpActivity"
-            android:padding="2dp"
-            android:text="@string/signUp1"
-            android:textColor="@android:color/holo_blue_bright"
-            android:textSize="16sp" />
-    </LinearLayout>
 </LinearLayout>
