@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.iti.intake40.tripguide.R;
+
 public class AddTrip extends AppCompatActivity {
 
     @Override

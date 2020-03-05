@@ -15,9 +15,9 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
     }
 
     @Override
-    public void loginWithEmail(String email, String password)
+    public void loginWithEmail(final String email, final String password)
     {
-        // Initialize Firebase Auth
+        // Initialize Fire base Auth
         mAuth = FirebaseAuth.getInstance() ;
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(login, new OnCompleteListener<AuthResult>() {
@@ -25,7 +25,7 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            login.goToHome();
+                            login.goToHome(email);
                         } else {
                             // If sign in fails, display a message to the user.
                             login.displayError("Invalid Email or PassWord");

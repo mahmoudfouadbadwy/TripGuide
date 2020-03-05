@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:weightSum="100"
     tools:context=".login.Login"
-    style="@style/SignUp" >
+     >
 
 
     <LinearLayout

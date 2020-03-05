@@ -21,5 +21,12 @@
     <string name="logo1">Log In</string>
     <string name="login1">Log In</string>
     <string name="signUp1">Sign Up</string>
+    <string name="upComming">UpComing</string>
+    <string name="history">History</string>
+    <string name="logout">LogOut</string>
+
+    <string name="navigation_drawer_open">Open Navigation Drawer</string>
+    <string name="navigation_drawer_close">Close Navigation Drawer</string>
+    <string name="other">Other</string>
 
 </resources>
