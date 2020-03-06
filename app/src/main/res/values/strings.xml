@@ -28,5 +28,8 @@
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
     <string name="other">Other</string>
+    <string name="NoTrip">No Ttip Available</string>
+    <string name="StartTrip">Start</string>
+    <string name="TripNote">Note</string>
 
 </resources>

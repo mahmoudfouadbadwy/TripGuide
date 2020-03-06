@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,11 +34,13 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setViews();
+        // set Selected Fragment
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new UpComingFragment()).commit();
+                    new UpComingFragment(this)).commit();
             navigationView.setCheckedItem(R.id.nav_upComming);
         }
+        // setEmail
         if (userIntent != null) {
             emailDrawer.setText(userIntent.getExtras().getString("Email"));
         }
@@ -58,7 +61,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         switch (item.getItemId()) {
             case R.id.nav_upComming:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new UpComingFragment()).commit();
+                        new UpComingFragment(this)).commit();
                 break;
             case R.id.nav_history:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -96,5 +99,12 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         startActivity(loginIntent);
         finish();
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+
 
 }
