@@ -21,7 +21,7 @@
     <string name="logo1">Log In</string>
     <string name="login1">Log In</string>
     <string name="signUp1">Sign Up</string>
-<<<<<<< HEAD
+
     <string name="TripName">Trip Name</string>
     <string name="StartPoint">Start Point</string>
     <string name="EndPoint">End Point</string>
@@ -38,7 +38,7 @@
         <item>One Way</item>
         <item>Round Trip</item>
     </string-array>
-=======
+
     <string name="upComming">UpComing</string>
     <string name="history">History</string>
     <string name="logout">LogOut</string>

@@ -41,13 +41,11 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
 
     AddTripContract.AddTripPresenter addTripPresenter ;
 
+    String rrepating = "No Repeat" ;
+    String ddirection = "one Way";
 
-<<<<<<< HEAD
-=======
-import com.iti.intake40.tripguide.R;
 
-public class AddTrip extends AppCompatActivity {
->>>>>>> fab399d247f0b148b93489f1e03713bd9e0f09ef
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,8 +129,17 @@ public class AddTrip extends AppCompatActivity {
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        System.out.println(parent.getSelectedItem().toString());
-        Toast.makeText(this , parent.getSelectedItem().toString() ,Toast.LENGTH_LONG ).show();
+        if(parent.getCount() >= 4)
+        {
+            rrepating = parent.getSelectedItem().toString();
+
+        }else{
+            ddirection = parent.getSelectedItem().toString();
+        }
+
+        System.out.println(parent.getSelectedItem().toString() +""+ position);
+
+
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
@@ -154,12 +161,14 @@ public class AddTrip extends AppCompatActivity {
             // go to data base fire base and save it ;
 
 
-
             TripBojo tripBojo = new TripBojo(tripName.getText().toString().trim(),
                     startPoint.getText().toString().trim(),
                     endPoint.getText().toString().trim(),
                     timerText.getText().toString().trim(),
-                    calenderText.getText().toString().trim(),"upComing");
+                    calenderText.getText().toString().trim(),
+                    "upComing",
+                    ddirection,
+                    rrepating);
 
 
             addTripPresenter.addTripToDataBase(tripBojo);
@@ -186,6 +195,7 @@ public class AddTrip extends AppCompatActivity {
 
     // SetupViews
     private void setupViews(){
+
         tripName = findViewById(R.id.tripName);
         startPoint = findViewById(R.id.startPoint);
         endPoint = findViewById(R.id.endPoint);
@@ -208,10 +218,10 @@ public class AddTrip extends AppCompatActivity {
                 R.array.spinnerDirection,
                 R.layout.support_simple_spinner_dropdown_item
         );
+
         arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         direction.setAdapter(arrayAdapter);
         direction.setOnItemSelectedListener(this);
-
     }
 
 

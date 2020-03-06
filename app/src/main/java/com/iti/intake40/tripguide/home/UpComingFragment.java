@@ -1,6 +1,7 @@
 package com.iti.intake40.tripguide.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.iti.intake40.tripguide.R;
+import com.iti.intake40.tripguide.addTrip.AddTrip;
 
 public class UpComingFragment extends Fragment implements View.OnClickListener {
     RecyclerView recyclerView;
@@ -49,8 +51,15 @@ public class UpComingFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.floatingActionButton: Toast.makeText(_context,"Add Trip",Toast.LENGTH_LONG).show();
+            case R.id.floatingActionButton:goToAddTrip();
+
         }
+    }
+
+    private void goToAddTrip()
+    {
+        Intent addTripIntent = new Intent(_context, AddTrip.class);
+        startActivity(addTripIntent);
     }
 
 }

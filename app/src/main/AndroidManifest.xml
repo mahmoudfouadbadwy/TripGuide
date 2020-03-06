@@ -10,22 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".home.Home"
-                  android:theme="@style/AppTheme.noActionBar">
-        </activity>
+        <activity android:name=".home.Home" android:theme="@style/AppTheme.noActionBar"></activity>
+        <activity android:name=".addTrip.AddTrip"/>
 
-        <activity android:name=".addTrip.AddTrip" />
-        <activity android:name=".login.Login"
-            android:theme="@style/AppTheme.noActionBar">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+        <activity android:name=".login.Login" android:theme="@style/AppTheme.noActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
 
-        <activity android:name=".registration.SignUpActivity"
-                  android:theme="@style/AppTheme.noActionBar" />
+        <activity android:name=".registration.SignUpActivity" android:theme="@style/AppTheme.noActionBar" />
 
     </application>
 

@@ -11,17 +11,21 @@ public class TripBojo {
     private String status ;
     private String day ;
     private String time ;
+    private String direction ;
+    private String repeating ;
+
     private List<String> notes ;
 
 
-    public TripBojo(String tripName, String startPoint, String endPoint, String day, String time, String status) {
+    public TripBojo(String tripName, String startPoint, String endPoint, String day, String time, String status ,String direction , String repeating) {
         this.tripName = tripName;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
         this.day = day;
         this.time = time;
         this.status = status;
-
+        this.direction = direction;
+        this.repeating = repeating;
     }
 
     public String getTripName() {
@@ -42,6 +46,22 @@ public class TripBojo {
 
     public void setNotes(List<String> notes) {
         this.notes = notes;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    public String getRepeating() {
+        return repeating;
+    }
+
+    public void setRepeating(String repeating) {
+        this.repeating = repeating;
     }
 
     public void setStartPoint(String startPoint) {

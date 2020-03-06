@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.iti.intake40.tripguide.R;
+import com.iti.intake40.tripguide.addTrip.AddTrip;
 import com.iti.intake40.tripguide.login.Login;
 
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,6 +30,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     private TextView emailDrawer;
     private View header;
     private Intent loginIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +106,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     protected void onStart() {
         super.onStart();
     }
+
 
 
 

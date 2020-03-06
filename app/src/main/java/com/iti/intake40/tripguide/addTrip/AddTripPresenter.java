@@ -33,9 +33,8 @@ public class AddTripPresenter implements AddTripContract.AddTripPresenter {
     @Override
     public void addTripToDataBase(TripBojo tripBojo) {
 
-        //user.getUid()
-        String key = mDatabase.child("user id 111111").push().getKey();
-        mDatabase.child("user id 111111").child(key).setValue(tripBojo);
+        String key = mDatabase.child(user.getUid()).push().getKey();
+        mDatabase.child(user.getUid()).child(key).setValue(tripBojo);
 
         mDatabase.keepSynced(true);
 
