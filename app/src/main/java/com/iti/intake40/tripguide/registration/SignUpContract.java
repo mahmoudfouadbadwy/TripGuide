@@ -1,15 +1,16 @@
 package com.iti.intake40.tripguide.registration;
 
 public interface SignUpContract {
-    public interface SignUpView{
-        public boolean validateName(String name);
-        public boolean validateEmail(String mail);
-        public boolean validatePassword(String password);
-        public boolean validateConfirmPassword(String confirmPassword);
-    }
-    public interface SignUpPresenter{
+     interface SignUpView{
 
-        public boolean signUp(String mail,String password ,String name);
-        public void stop();
+         boolean validateEmail(String mail);
+         boolean validatePassword(String password);
+         boolean validateConfirmPassword(String confirmPassword);
+         void goToHome(String email);
+    }
+     interface SignUpPresenter{
+
+         boolean signUp(String mail,String password );
+         void stop();
     }
 }

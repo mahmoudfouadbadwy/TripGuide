@@ -12,42 +12,32 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iti.intake40.tripguide.R;
+import com.iti.intake40.tripguide.home.Home;
 import com.iti.intake40.tripguide.login.Login;
 
 public class SignUpActivity extends AppCompatActivity implements SignUpContract.SignUpView {
 
-    EditText nameTxt ;
-    EditText mailTxt ;
-    EditText passwordTxt ;
-    EditText conformPasswordTxt ;
-    Button signupBtn ;
-    TextView loginLink;
-    Intent loginIntent;
-
-
-    SignUpContract.SignUpPresenter signUpPresenter;
-
-
+    private EditText mailTxt;
+    private EditText passwordTxt;
+    private EditText conformPasswordTxt;
+    private Button signUpBtn;
+    private TextView loginLink;
+    private Intent loginIntent;
+    private SignUpContract.SignUpPresenter signUpPresenter;
+    private Intent homeIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState) ;
-        setContentView(R.layout.activity_main) ;
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         setupView();
-        //Define singupPresenter
+        //Define singUpPresenter
         signUpPresenter = new SignUpPresenter(this);
-
-
         //Button clicked
-        signupBtn.setOnClickListener(new View.OnClickListener() {
+        signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                boolean nameValid = validateName(nameTxt.getText().toString().trim());
-                boolean emailValid = validateEmail(mailTxt.getText().toString().trim());
-                boolean passwordValil = validatePassword(passwordTxt.getText().toString().trim());
-                boolean conformPasswordValid = validateConfirmPassword(conformPasswordTxt.getText().toString().trim());
-                makeValidation(passwordValil ,conformPasswordValid ,nameValid ,emailValid);
+                makeValidation();
 
             }
         });
@@ -56,101 +46,88 @@ public class SignUpActivity extends AppCompatActivity implements SignUpContract.
         loginLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginIntent = new Intent(SignUpActivity.this,Login.class);
+                loginIntent = new Intent(SignUpActivity.this, Login.class);
                 startActivity(loginIntent);
                 finish();
             }
         });
     }
 
-    @Override
-    public boolean validateName(String name) {
-
-        boolean check  = false ;
-
-        if(name.isEmpty() == false){
-            nameTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.user,0);
-            check = true ;
-        }
-        else{
-            nameTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.error,0);
-        }
-        return check;
-    }
 
     @Override
     public boolean validateEmail(String mail) {
-        boolean check  = false ;
+        boolean check = false;
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-        if (mail.matches(emailPattern) && mail.isEmpty()==false)
-        {
-            mailTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.email,0);
+        if (mail.matches(emailPattern) && mail.isEmpty() == false) {
+            mailTxt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.email, 0);
             check = true;
-        }
-        else {
-            mailTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.error,0);
+        } else {
+            mailTxt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.error, 0);
         }
 
         return check;
     }
-
 
 
     @Override
     public boolean validatePassword(String password) {
-        boolean check  = false ;
+        boolean check = false;
 
-        if(password.length() >= 6){
-            passwordTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.password,0);
-            check = true ;
-        }
-        else {
-            passwordTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.error,0);
-            Toast.makeText(SignUpActivity.this,"PassWord Must Be More Than 6 Char",Toast.LENGTH_LONG).show();
+        if (password.length() >= 6) {
+            passwordTxt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.password, 0);
+            check = true;
+        } else {
+            passwordTxt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.error, 0);
+            Toast.makeText(SignUpActivity.this, "PassWord Must Be More Than 6 Char", Toast.LENGTH_LONG).show();
         }
         return check;
     }
 
     @Override
     public boolean validateConfirmPassword(String confirmPassword) {
-        boolean check  = false ;
+        boolean check = false;
 
-        if(passwordTxt.getText().toString().equals(confirmPassword))
-        {
-            conformPasswordTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.confirm,0);
+        if (passwordTxt.getText().toString().equals(confirmPassword)) {
+            conformPasswordTxt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.confirm, 0);
             check = true;
-        }
-        else {
-            conformPasswordTxt.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.error,0);
+        } else {
+            conformPasswordTxt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.error, 0);
         }
 
         return check;
     }
 
-    void makeValidation(boolean password , boolean conformPassword ,boolean name ,boolean email ){
-        if(password == true && conformPassword == true && name == true && email == true){
-           if( signUpPresenter.signUp(mailTxt.getText().toString(),passwordTxt.getText().toString(),nameTxt.getText().toString()))
-           {
-                 // go to home
-           }
-           else {
-               Toast.makeText(SignUpActivity.this,"Email Already Exist",Toast.LENGTH_LONG).show();
-           }
+    @Override
+    public void goToHome(String email) {
+        homeIntent = new Intent(SignUpActivity.this, Home.class);
+        homeIntent.putExtra("Email",email);
+        startActivity(homeIntent);
+    }
+
+    void makeValidation() {
+
+        boolean email = validateEmail(mailTxt.getText().toString().trim());
+        boolean password = validatePassword(passwordTxt.getText().toString().trim());
+        boolean conformPassword = validateConfirmPassword(conformPasswordTxt.getText().toString().trim());
+        if (email == true && password == true && conformPassword == true) {
+            if (signUpPresenter.signUp(mailTxt.getText().toString(), passwordTxt.getText().toString())) {
+                goToHome(mailTxt.getText().toString());
+            } else {
+                Toast.makeText(SignUpActivity.this, "Email Already Exist", Toast.LENGTH_LONG).show();
+            }
         }
 
     }
 
 
-    private void setupView()
-    {
+    private void setupView() {
         // Define component
-        nameTxt = findViewById(R.id.nameText) ;
-        mailTxt = findViewById(R.id.mailText) ;
-        passwordTxt = findViewById(R.id.passwordText) ;
-        conformPasswordTxt = findViewById(R.id.confirmText) ;
-        signupBtn = findViewById(R.id.signUpButton) ;
-        loginLink =findViewById(R.id.loginText);
+        mailTxt = findViewById(R.id.mailText);
+        passwordTxt = findViewById(R.id.passwordText);
+        conformPasswordTxt = findViewById(R.id.confirmText);
+        signUpBtn = findViewById(R.id.signUpButton);
+        loginLink = findViewById(R.id.loginText);
     }
 
 }
