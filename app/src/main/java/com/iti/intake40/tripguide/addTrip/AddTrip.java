@@ -42,6 +42,12 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
     AddTripContract.AddTripPresenter addTripPresenter ;
 
 
+<<<<<<< HEAD
+=======
+import com.iti.intake40.tripguide.R;
+
+public class AddTrip extends AppCompatActivity {
+>>>>>>> fab399d247f0b148b93489f1e03713bd9e0f09ef
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

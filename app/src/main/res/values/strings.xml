@@ -21,6 +21,7 @@
     <string name="logo1">Log In</string>
     <string name="login1">Log In</string>
     <string name="signUp1">Sign Up</string>
+<<<<<<< HEAD
     <string name="TripName">Trip Name</string>
     <string name="StartPoint">Start Point</string>
     <string name="EndPoint">End Point</string>
@@ -37,5 +38,17 @@
         <item>One Way</item>
         <item>Round Trip</item>
     </string-array>
+=======
+    <string name="upComming">UpComing</string>
+    <string name="history">History</string>
+    <string name="logout">LogOut</string>
+
+    <string name="navigation_drawer_open">Open Navigation Drawer</string>
+    <string name="navigation_drawer_close">Close Navigation Drawer</string>
+    <string name="other">Other</string>
+    <string name="NoTrip">No Ttip Available</string>
+    <string name="StartTrip">Start</string>
+    <string name="TripNote">Note</string>
+>>>>>>> fab399d247f0b148b93489f1e03713bd9e0f09ef
 
 </resources>

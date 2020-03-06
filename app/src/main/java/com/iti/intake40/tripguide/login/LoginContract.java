@@ -4,7 +4,7 @@ public interface LoginContract {
     public interface LoginView{
         public boolean validateEmail(String email);
         public boolean validatePassword(String password);
-        public void goToHome();
+        public void goToHome(String email);
         public void displayError(String message);
     }
     public interface LoginPresenter{

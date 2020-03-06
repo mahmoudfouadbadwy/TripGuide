@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.iti.intake40.tripguide.R;
+import com.iti.intake40.tripguide.home.Home;
 import com.iti.intake40.tripguide.registration.SignUpActivity;
 
 public class Login extends AppCompatActivity implements LoginContract.LoginView {
@@ -36,8 +37,8 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
     private FirebaseAuth mAuth;
-
     private LoginContract.LoginPresenter presenter;
+    private Intent homeIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +55,6 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
                }
             }
         });
-
         googleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +65,7 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
 
     @Override
     public boolean validateEmail(String email) {
-        boolean check  = false ;
+        boolean check  ;
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         if (email.matches(emailPattern) && email.isEmpty()==false)
         {
@@ -81,7 +81,7 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
 
     @Override
     public boolean validatePassword(String password) {
-        boolean check  = false ;
+        boolean check ;
 
         if(password.length() >= 6){
             this.password.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.password,0);
@@ -105,8 +105,12 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
       return  check;
     }
     @Override
-    public void goToHome() {
-        Toast.makeText(Login.this,"Login",Toast.LENGTH_LONG).show();
+    public void goToHome(String email)
+    {
+        homeIntent = new Intent(this, Home.class);
+        homeIntent.putExtra("Email",email);
+        startActivity(homeIntent);
+        finish();
     }
 
     @Override
@@ -121,6 +125,7 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
         password = findViewById(R.id.passwordText);
         googleBtn = findViewById(R.id.signGoogle);
         mAuth = FirebaseAuth.getInstance();
+
     }
 
     public void goToSignUpActivity(View view) {
@@ -180,6 +185,16 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
                         }
                     }
                 });
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+       if( mAuth.getCurrentUser() != null)
+       {
+           goToHome(mAuth.getCurrentUser().getEmail());
+       }
     }
 
     @Override
