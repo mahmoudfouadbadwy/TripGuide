@@ -21,5 +21,21 @@
     <string name="logo1">Log In</string>
     <string name="login1">Log In</string>
     <string name="signUp1">Sign Up</string>
+    <string name="TripName">Trip Name</string>
+    <string name="StartPoint">Start Point</string>
+    <string name="EndPoint">End Point</string>
+    <string name="addTrip">Add Trip</string>
+    
+    <string-array name="spinnerRepeating">
+        <item>No Repeat</item>
+        <item>Daily</item>
+        <item>Weakly</item>
+        <item>Monthly</item>
+    </string-array>
+
+    <string-array name="spinnerDirection">
+        <item>One Way</item>
+        <item>Round Trip</item>
+    </string-array>
 
 </resources>
