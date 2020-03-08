@@ -1,6 +1,8 @@
 package com.iti.intake40.tripguide.home;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,14 +36,21 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         holder.getTitle().setText(trips.get(position).getTripName());
         holder.getDate().setText(trips.get(position).getDay());
         holder.getTime().setText(trips.get(position).getTime());
         holder.getStatus().setText(trips.get(position).getStatus());
         holder.getFrom().setText(trips.get(position).getStartPoint());
         holder.getTo().setText(trips.get(position).getEndPoint());
-
+        holder.getStart().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+holder.getFrom().getText()+"&daddr="+
+                        holder.getTo().getText()));
+                _context.startActivity(mapIntent);
+            }
+        });
     }
 
     @Override

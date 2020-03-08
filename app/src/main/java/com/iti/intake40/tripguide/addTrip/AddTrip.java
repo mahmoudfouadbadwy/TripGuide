@@ -1,5 +1,6 @@
 package com.iti.intake40.tripguide.addTrip;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
@@ -16,15 +17,23 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.iti.intake40.tripguide.R;
 
+import java.util.Arrays;
 import java.util.Calendar;
 
 public class AddTrip extends AppCompatActivity implements AddTripContract.AddTripView, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, AdapterView.OnItemSelectedListener {
 
     private EditText tripName;
-    private EditText startPoint;
-    private EditText endPoint;
+    private TextView startPoint;
+    private TextView endPoint;
     private ImageView calender;
     private ImageView timer;
     private TextView calenderText;
@@ -37,11 +46,17 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
     private String repeating_text = "No Repeat";
     private String direction_text = "one Way";
 
+    // map auto complete
+    PlacesClient placesClient;
+    String apiKey = "AIzaSyBNgF_t8g4xhoVOcM2KAIgVjOwOecnBWcM";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trip);
         setupViews();
+        getLocations(R.id.frag,startPoint);
+        getLocations(R.id.frag2,endPoint);
         addTripPresenter = new AddTripPresenter(AddTrip.this);
         calender.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +88,11 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
                 }
             }
         });
+
+
+
     }
+
     // show Date picker
     @Override
     public void showDataPickerDialog() {
@@ -173,6 +192,30 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
         arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         direction.setAdapter(arrayAdapter);
         direction.setOnItemSelectedListener(this);
+
+        // map auto complete
+        if(!Places.isInitialized()){
+            Places.initialize(getApplicationContext() , apiKey);
+        }
+        placesClient = Places.createClient(this);
+
+
+    }
+    // select points
+    private void getLocations(int fragment, final TextView result){
+        final AutocompleteSupportFragment autocompleteSupportFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(fragment);
+        autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ID , Place.Field.LAT_LNG , Place.Field.NAME));
+        autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(@NonNull Place place) {
+
+                result.setText(place.getName());
+            }
+            @Override
+            public void onError(@NonNull Status status) {
+
+            }
+        });
     }
 
     // go to home page

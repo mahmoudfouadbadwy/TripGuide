@@ -23,29 +23,63 @@
         android:hint="@string/TripName"
         android:inputType="textPersonName"/>
 
-    <EditText
-        android:id="@+id/startPoint"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_weight="12"
-        android:drawableRight="@drawable/startpoint"
-        android:ems="10"
-        android:hint="@string/StartPoint"
-        android:inputType="textPersonName" />
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:orientation="vertical"
+        android:background="@color/cardview_shadow_start_color">
+        <fragment
+            android:id="@+id/frag"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ></fragment>
+        <TextView
+            android:id="@+id/startPoint"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="12"
+            android:drawableRight="@drawable/startpoint"
+            android:ems="10"
+            android:hint="@string/StartPoint"
+            android:inputType="textPersonName" />
+    </FrameLayout>
 
-    <EditText
-        android:id="@+id/endPoint"
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_weight="12"
-        android:drawableRight="@drawable/endpoint"
-        android:ems="10"
-        android:hint="@string/EndPoint"
-        android:inputType="textPersonName" />
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:orientation="vertical"
+
+        android:background="@color/cardview_shadow_start_color">
+        <fragment
+            android:id="@+id/frag2"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+
+            ></fragment>
+        <TextView
+            android:id="@+id/endPoint"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="12"
+
+            android:ems="10"
+            android:hint="@string/EndPoint"
+            android:inputType="textPersonName" />
+    </FrameLayout>
+
+
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
