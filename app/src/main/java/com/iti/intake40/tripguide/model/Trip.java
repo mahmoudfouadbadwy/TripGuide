@@ -1,23 +1,34 @@
-package com.iti.intake40.tripguide.addTrip;
+package com.iti.intake40.tripguide.model;
 
 import java.util.List;
 
-public class TripBojo {
+public class Trip {
+    private String key;
 
 
-    private String tripName ;
-    private String startPoint ;
-    private String endPoint ;
-    private String status ;
-    private String day ;
-    private String time ;
-    private String direction ;
-    private String repeating ;
 
-    private List<String> notes ;
+    private String tripName;
+    private String startPoint;
+    private String endPoint;
+    private String status;
+    private String day;
+    private String time;
+    private String direction;
+    private String repeating;
+    private List<String> notes;
 
-
-    public TripBojo(String tripName, String startPoint, String endPoint, String day, String time, String status ,String direction , String repeating) {
+    public  Trip()
+    {
+        this.tripName = tripName;
+        this.startPoint = startPoint;
+        this.endPoint = endPoint;
+        this.day = day;
+        this.time = time;
+        this.status = status;
+        this.direction = direction;
+        this.repeating = repeating;
+    }
+    public Trip(String tripName, String startPoint, String endPoint, String day, String time, String status, String direction, String repeating) {
         this.tripName = tripName;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
@@ -98,5 +109,13 @@ public class TripBojo {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

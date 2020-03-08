@@ -1,21 +1,18 @@
 package com.iti.intake40.tripguide.addTrip;
 
 public interface AddTripContract {
-
-    public interface AddTripView{
-
-        public boolean noEmptyText(String input) ;
-        public void checkValidation() ;
-        public void showDataPickerDialog() ;
-        public void showTimePickerDialog() ;
-        public void goToHomePage();
-
+     interface AddTripView{
+         boolean checkEmpty(String input) ;
+         boolean checkValidation() ;
+         void showDataPickerDialog() ;
+         void showTimePickerDialog() ;
+         void displayMessage(String message);
+         void goToHomePage();
     }
-
-    public interface AddTripPresenter{
-
-       public void addTripToDataBase(TripBojo tripBojo);
-
+     interface AddTripPresenter{
+        void addTrip(String tripName,String startPoint,String endPoint,String timerText,String date,String status,String direction ,String repeat);
+        void stop();
+        void onSuccess();
     }
 
 

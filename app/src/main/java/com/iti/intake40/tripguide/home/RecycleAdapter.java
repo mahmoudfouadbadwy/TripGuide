@@ -14,12 +14,17 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.iti.intake40.tripguide.R;
+import com.iti.intake40.tripguide.model.Trip;
+
+import java.util.List;
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
     Context _context;
-    RecycleAdapter(Context _context )
+    List<Trip> trips;
+    RecycleAdapter(Context _context ,List<Trip>trips)
     {
         this._context = _context;
+        this.trips = trips;
     }
 
     @NonNull
@@ -30,12 +35,19 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.getTitle().setText(trips.get(position).getTripName());
+        holder.getDate().setText(trips.get(position).getDay());
+        holder.getTime().setText(trips.get(position).getTime());
+        holder.getStatus().setText(trips.get(position).getStatus());
+        holder.getFrom().setText(trips.get(position).getStartPoint());
+        holder.getTo().setText(trips.get(position).getEndPoint());
 
     }
 
     @Override
     public int getItemCount() {
-        return 2;
+
+        return trips.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

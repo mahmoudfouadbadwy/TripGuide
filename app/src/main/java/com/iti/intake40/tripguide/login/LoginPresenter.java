@@ -1,43 +1,40 @@
 package com.iti.intake40.tripguide.login;
 
-import androidx.annotation.NonNull;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+
+import com.iti.intake40.tripguide.model.FireBaseModel;
 
 public class LoginPresenter implements LoginContract.LoginPresenter {
-    private  Login login;
-    private FirebaseAuth mAuth;
+    private Login login;
+    private FireBaseModel model;
     public LoginPresenter(Login login)
     {
         this.login=login;
+        model = new FireBaseModel();
     }
 
     @Override
     public void loginWithEmail(final String email, final String password)
     {
-        // Initialize Fire base Auth
-        mAuth = FirebaseAuth.getInstance() ;
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(login, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            login.goToHome(email);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            login.displayError("Invalid Email or PassWord");
-                        }
-                    }
-                });
+             model.signIn(email,password,login,this);
     }
+
+    @Override
+    public void onSuccess() {
+        login.goToHome();
+    }
+
+    @Override
+    public void onFailure() {
+        login.displayError("Invalid Email Or Password");
+    }
+
 
     @Override
     public void stop()
     {
         login = null;
-        mAuth = null;
+        model = null;
     }
+
+
 }

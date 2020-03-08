@@ -41,18 +41,13 @@ public class SignUpActivity extends AppCompatActivity implements SignUpContract.
 
             }
         });
-
-
         loginLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginIntent = new Intent(SignUpActivity.this, Login.class);
-                startActivity(loginIntent);
-                finish();
+                goToLogin();
             }
         });
     }
-
 
     @Override
     public boolean validateEmail(String mail) {
@@ -68,7 +63,6 @@ public class SignUpActivity extends AppCompatActivity implements SignUpContract.
 
         return check;
     }
-
 
     @Override
     public boolean validatePassword(String password) {
@@ -99,10 +93,29 @@ public class SignUpActivity extends AppCompatActivity implements SignUpContract.
     }
 
     @Override
-    public void goToHome(String email) {
+    public void goToHome() {
         homeIntent = new Intent(SignUpActivity.this, Home.class);
-        homeIntent.putExtra("Email",email);
+        homeIntent.putExtra("Email", mailTxt.getText().toString());
         startActivity(homeIntent);
+        finish();
+    }
+
+    @Override
+    public void goToLogin() {
+        loginIntent = new Intent(SignUpActivity.this, Login.class);
+        startActivity(loginIntent);
+        finish();
+    }
+
+    @Override
+    public void displayMessage(String message) {
+        Toast.makeText(SignUpActivity.this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        signUpPresenter.stop();
     }
 
     void makeValidation() {
@@ -110,16 +123,11 @@ public class SignUpActivity extends AppCompatActivity implements SignUpContract.
         boolean email = validateEmail(mailTxt.getText().toString().trim());
         boolean password = validatePassword(passwordTxt.getText().toString().trim());
         boolean conformPassword = validateConfirmPassword(conformPasswordTxt.getText().toString().trim());
-        if (email == true && password == true && conformPassword == true) {
-            if (signUpPresenter.signUp(mailTxt.getText().toString(), passwordTxt.getText().toString())) {
-                goToHome(mailTxt.getText().toString());
-            } else {
-                Toast.makeText(SignUpActivity.this, "Email Already Exist", Toast.LENGTH_LONG).show();
-            }
+        if (email == true & password == true & conformPassword == true) {
+            signUpPresenter.signUp(mailTxt.getText().toString(), passwordTxt.getText().toString());
         }
 
     }
-
 
     private void setupView() {
         // Define component

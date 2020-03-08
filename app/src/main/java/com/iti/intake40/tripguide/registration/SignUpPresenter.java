@@ -1,39 +1,32 @@
 package com.iti.intake40.tripguide.registration;
-import androidx.annotation.NonNull;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+import com.iti.intake40.tripguide.model.FireBaseModel;
 
 public class SignUpPresenter implements SignUpContract.SignUpPresenter {
-    private FirebaseAuth firebaseAuth;
     private SignUpActivity context;
-    private boolean status = false;
-
+    private FireBaseModel model;
     public SignUpPresenter(SignUpActivity context)
     {
         this.context = context;
+        model = new FireBaseModel();
     }
     @Override
-    public boolean signUp(String mail, String password) {
-        // Initialize Fire base Auth
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseAuth.createUserWithEmailAndPassword(mail, password)
-                .addOnCompleteListener(context,new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            status = true;
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            status = false;
-                        }
-                    }
-                });
-        return status;
+    public void signUp(String mail,String password) {
+              model.signUp(mail,password,context,this);
     }
+
+    @Override
+    public void onSuccess() {
+           context.goToHome();
+    }
+
+    @Override
+    public void onFailure() {
+          context.displayMessage("Email Already Exist");
+    }
+
     @Override
     public void stop() {
-
+        context = null;
+        model = null;
     }
 }
