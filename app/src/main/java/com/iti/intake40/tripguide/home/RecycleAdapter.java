@@ -3,21 +3,19 @@ package com.iti.intake40.tripguide.home;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.iti.intake40.tripguide.R;
 import com.iti.intake40.tripguide.model.Trip;
-
 import java.util.List;
 
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
@@ -41,14 +39,19 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         holder.getDate().setText(trips.get(position).getDay());
         holder.getTime().setText(trips.get(position).getTime());
         holder.getStatus().setText(trips.get(position).getStatus());
-        holder.getFrom().setText(trips.get(position).getStartPoint());
-        holder.getTo().setText(trips.get(position).getEndPoint());
+        holder.getFrom().setText("From : " +trips.get(position).getStartPoint());
+        holder.getTo().setText("To : "+trips.get(position).getEndPoint());
         holder.getStart().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+holder.getFrom().getText()+"&daddr="+
                         holder.getTo().getText()));
                 _context.startActivity(mapIntent);
+            }
+        });
+        holder.getOptions().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
             }
         });
     }
@@ -59,7 +62,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         return trips.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         View view;
         TextView title;
         TextView date;
@@ -69,7 +72,15 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         TextView to ;
         Button start;
         ImageView note;
+        ImageView options;
         CardView cardView;
+
+        public ImageView getOptions() {
+            if (options ==null)
+                options = view.findViewById(R.id.optionMenu);
+
+            return options;
+        }
 
         public TextView getTitle() {
             if (title == null)
@@ -128,6 +139,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             view = itemView;
+            view.setOnCreateContextMenuListener(this);
         }
 
         public CardView getCardView() {
@@ -137,5 +149,10 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         }
 
 
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            PopupMenu popupMenu = new PopupMenu(_context,options);
+            popupMenu.getMenuInflater().inflate(R.menu.options_menu,menu);
+        }
     }
 }

@@ -37,8 +37,10 @@ public class UpComingFragment extends Fragment implements View.OnClickListener {
     private ArrayList<Trip> trips;
     private Trip trip;
     private ValueEventListener tripListener;
+
     UpComingFragment(Context _context){
         this._context = _context;
+
     }
     @Nullable
     @Override

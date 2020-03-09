@@ -46,8 +46,13 @@
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
     <string name="other">Other</string>
     <string name="NoTrip">No Ttip Available</string>
-    <string name="StartTrip">Start</string>
+    <string name="StartTrip">Start Trip</string>
     <string name="TripNote">Note</string>
 
+    <string name="addnote_item">Add Notes</string>
+    <string name="done_item">Make Done</string>
+    <string name="edit_item">Edit</string>
+    <string name="cancel_item">Cancel</string>
+    <string name="delete_item">Delete</string>
 
 </resources>
