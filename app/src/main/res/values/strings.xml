@@ -24,8 +24,13 @@
     <string name="TripName">Trip Name</string>
     <string name="StartPoint">Start Point</string>
     <string name="EndPoint">End Point</string>
+<<<<<<< HEAD
     <string name="addTrip">Add Trip</string>
 
+=======
+    <string name="saveTrip">Save</string>
+    
+>>>>>>> 7c1ba8b34926af6a08f302f8e32bfe696e767c9f
     <string-array name="spinnerRepeating">
         <item>No Repeat</item>
         <item>Daily</item>
