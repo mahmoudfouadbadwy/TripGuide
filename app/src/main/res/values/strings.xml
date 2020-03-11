@@ -25,7 +25,7 @@
     <string name="StartPoint">Start Point</string>
     <string name="EndPoint">End Point</string>
     <string name="addTrip">Add Trip</string>
-    
+
     <string-array name="spinnerRepeating">
         <item>No Repeat</item>
         <item>Daily</item>
@@ -54,5 +54,8 @@
     <string name="edit_item">Edit</string>
     <string name="cancel_item">Cancel</string>
     <string name="delete_item">Delete</string>
+    <string name="AddNote">Save Note</string>
+    <string name="notecontent_hint">Enter Your Note Here</string>
+    <string name="cancelNote">Cancel</string>
 
 </resources>

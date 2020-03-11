@@ -4,9 +4,6 @@ import java.util.List;
 
 public class Trip {
     private String key;
-
-
-
     private String tripName;
     private String startPoint;
     private String endPoint;

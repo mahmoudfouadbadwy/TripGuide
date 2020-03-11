@@ -95,10 +95,12 @@ public class UpComingFragment extends Fragment implements View.OnClickListener {
                 if (dataSnapshot.getChildren()!=null) {
                     trips.clear();
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
-                        trip = data.getValue(Trip.class);
-                        trip.setKey(data.getKey());
-                        trips.add(trip);
 
+                        trip = data.getValue(Trip.class);
+                        if(trip.getStatus().equalsIgnoreCase("UpComing")) {
+                            trip.setKey(data.getKey());
+                            trips.add(trip);
+                        }
                     }
                 }
                 configureVisibility();
