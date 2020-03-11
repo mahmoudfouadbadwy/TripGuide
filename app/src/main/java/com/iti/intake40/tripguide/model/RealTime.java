@@ -23,8 +23,6 @@ public class RealTime {
     public RealTime() {
         if (mDatabase == null) {
             mDatabase = FirebaseDatabase.getInstance().getReference("TripGuide");
-
-
         }
     }
 
@@ -46,6 +44,7 @@ public class RealTime {
         key = mDatabase.child(user.getUid()).push().getKey();
         mDatabase.child(user.getUid()).child(key).setValue(trip);
         mDatabase.keepSynced(true);
+
     }
 
     public void makeDone(String key) {

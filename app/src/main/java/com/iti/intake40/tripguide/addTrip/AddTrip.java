@@ -1,10 +1,16 @@
 package com.iti.intake40.tripguide.addTrip;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,6 +35,7 @@ import com.iti.intake40.tripguide.R;
 import java.util.Arrays;
 import java.util.Calendar;
 
+
 public class AddTrip extends AppCompatActivity implements AddTripContract.AddTripView, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, AdapterView.OnItemSelectedListener {
 
     private EditText tripName;
@@ -45,18 +52,25 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
     private AddTripContract.AddTripPresenter addTripPresenter;
     private String repeating_text = "No Repeat";
     private String direction_text = "one Way";
-
+    private int _year;
+    private int _month;
+    private int _day;
+    private int _hours;
+    private int _minute;
+    private PendingIntent pendingIntent;
+    private Intent brodcastIntent;
+    private AlarmManager alarmMgr;
+    private android.icu.util.Calendar calendar;
     // map auto complete
     PlacesClient placesClient;
     String apiKey = "AIzaSyBNgF_t8g4xhoVOcM2KAIgVjOwOecnBWcM";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trip);
         setupViews();
-        getLocations(R.id.frag,startPoint);
-        getLocations(R.id.frag2,endPoint);
+        getLocations(R.id.frag, startPoint);
+        getLocations(R.id.frag2, endPoint);
         addTripPresenter = new AddTripPresenter(AddTrip.this);
         calender.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,13 +96,11 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
                             "upComing",
                             direction_text,
                             repeating_text);
-                }
-                else {
+                } else {
                     displayMessage("Unable To Add Trip");
                 }
             }
         });
-
 
 
     }
@@ -97,7 +109,6 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
     @Override
     public void showDataPickerDialog() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(
-
                 this,
                 this,
                 Calendar.getInstance().get(Calendar.YEAR),
@@ -109,7 +120,10 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        int newMonth = month+1;
+        _year = year;
+        _month = month;
+        _day = dayOfMonth;
+        int newMonth = month + 1;
         String s = dayOfMonth + "-" + newMonth + "-" + year;
         calenderText.setText(s);
     }
@@ -131,6 +145,8 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        _hours = hourOfDay;
+        _minute = minute;
         String s = hourOfDay + ":" + minute;
         timerText.setText(s);
     }
@@ -197,23 +213,25 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
         direction.setOnItemSelectedListener(this);
 
         // map auto complete
-        if(!Places.isInitialized()){
-            Places.initialize(getApplicationContext() , apiKey);
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), apiKey);
         }
         placesClient = Places.createClient(this);
 
 
     }
+
     // select points
-    private void getLocations(int fragment, final TextView result){
+    private void getLocations(int fragment, final TextView result) {
         final AutocompleteSupportFragment autocompleteSupportFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(fragment);
-        autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ID , Place.Field.LAT_LNG , Place.Field.NAME));
+        autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.LAT_LNG, Place.Field.NAME));
         autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
 
                 result.setText(place.getName());
             }
+
             @Override
             public void onError(@NonNull Status status) {
 
@@ -227,9 +245,29 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
         finish();
     }
 
+
+    @Override
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void setAlarm() {
+        calendar = android.icu.util.Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.YEAR, _year);
+        calendar.set(Calendar.MONTH, _month);
+        calendar.set(Calendar.DAY_OF_MONTH, _day);
+        calendar.set(Calendar.HOUR_OF_DAY,_hours);
+        calendar.set(Calendar.MINUTE,_minute);
+        calendar.set(Calendar.SECOND, 0);
+        brodcastIntent = new Intent(AddTrip.this, AlarmBroadCast.class);
+        pendingIntent = PendingIntent.getBroadcast(AddTrip.this, 0, brodcastIntent, 0);
+        alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmMgr.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
         addTripPresenter.stop();
     }
+
+
 }

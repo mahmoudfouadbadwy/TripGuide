@@ -8,6 +8,7 @@ public interface AddTripContract {
          void showTimePickerDialog() ;
          void displayMessage(String message);
          void goToHomePage();
+         void setAlarm();
     }
      interface AddTripPresenter{
         void addTrip(String tripName,String startPoint,String endPoint,String timerText,String date,String status,String direction ,String repeat);
