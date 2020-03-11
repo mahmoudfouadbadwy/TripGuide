@@ -24,7 +24,7 @@
     <string name="TripName">Trip Name</string>
     <string name="StartPoint">Start Point</string>
     <string name="EndPoint">End Point</string>
-    <string name="addTrip">Add Trip</string>
+    <string name="saveTrip">Save</string>
     
     <string-array name="spinnerRepeating">
         <item>No Repeat</item>

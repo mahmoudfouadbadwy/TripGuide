@@ -107,7 +107,8 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        String s = dayOfMonth + "-" + month + "-" + year;
+        int newMonth = month+1;
+        String s = dayOfMonth + "-" + newMonth + "-" + year;
         calenderText.setText(s);
     }
 
