@@ -97,11 +97,13 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
     @Override
     public void showDataPickerDialog() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(
+
                 this,
                 this,
                 Calendar.getInstance().get(Calendar.YEAR),
                 Calendar.getInstance().get(Calendar.MONTH),
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         datePickerDialog.show();
     }
 
