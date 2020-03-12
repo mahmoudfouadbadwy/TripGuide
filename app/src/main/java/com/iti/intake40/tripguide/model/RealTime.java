@@ -47,6 +47,19 @@ public class RealTime {
 
     }
 
+    public void editTrip(Trip trip,String key)
+    {
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        mDatabase.child(user.getUid()).child(key).child("day").setValue(trip.getDay());
+        mDatabase.child(user.getUid()).child(key).child("direction").setValue(trip.getDirection());
+        mDatabase.child(user.getUid()).child(key).child("endPoint").setValue(trip.getEndPoint());
+        mDatabase.child(user.getUid()).child(key).child("startPoint").setValue(trip.getStartPoint());
+        mDatabase.child(user.getUid()).child(key).child("repeating").setValue(trip.getRepeating());
+        mDatabase.child(user.getUid()).child(key).child("time").setValue(trip.getTime());
+        mDatabase.child(user.getUid()).child(key).child("tripName").setValue(trip.getTripName());
+        mDatabase.keepSynced(true);
+    }
+
     public void makeDone(String key) {
         user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase.child(user.getUid()).child(key).child("status").setValue("Done");
