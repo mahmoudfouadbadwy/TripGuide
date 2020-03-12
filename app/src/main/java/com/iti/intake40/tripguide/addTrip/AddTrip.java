@@ -114,7 +114,7 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
                     }
 
                 } else {
-                    displayMessage("Unable To Add Trip Please Check Your Data");
+                    displayMessage("Unable To Save Trip Please Check Your Data");
                 }
             }
         });
@@ -239,7 +239,7 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
         final AutocompleteSupportFragment autocompleteSupportFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(fragment);
         autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.LAT_LNG, Place.Field.NAME));
         // for edit
-        if (editData!=null)
+        if (editData.hasExtra("from"))
         {
            switch (result.getId())
            {

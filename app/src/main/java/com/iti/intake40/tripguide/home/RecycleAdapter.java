@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
@@ -151,20 +149,27 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         for (int i = 0; i < notes.size(); i++) {
             myNoteArray[i] = notes.get(i);
         }
-        AlertDialog.Builder builder = new AlertDialog.Builder(_context);
-        builder.setTitle("Notes");
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
 
-            }
-        });
-        builder.setItems(myNoteArray, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-        builder.create().show();
+        if (myNoteArray.length >0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(_context);
+            builder.setTitle("Notes");
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            builder.setItems(myNoteArray, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+            builder.create().show();
+        }
+        else
+        {
+            Toast.makeText(_context,"No Notes Available",Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void showAlertDialog(String msg) {
