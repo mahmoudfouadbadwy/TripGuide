@@ -32,16 +32,20 @@ public class UpComingFragment extends Fragment implements View.OnClickListener {
     private View view;
     private FloatingActionButton floatingActionButton;
     private Context _context;
+
+    public Context get_context() {
+        return _context;
+    }
+
+    public void set_context(Context _context) {
+        this._context = _context;
+    }
+
     private Intent addTripIntent;
     private DatabaseReference mTripReference;
     private ArrayList<Trip> trips;
     private Trip trip;
     private ValueEventListener tripListener;
-
-    UpComingFragment(Context _context){
-        this._context = _context;
-
-    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,7 +66,7 @@ public class UpComingFragment extends Fragment implements View.OnClickListener {
 
     private void goToAddTrip()
     {
-        addTripIntent = new Intent(_context, AddTrip.class);
+        addTripIntent = new Intent(get_context(), AddTrip.class);
         startActivity(addTripIntent);
     }
 

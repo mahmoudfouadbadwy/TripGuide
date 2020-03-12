@@ -10,14 +10,13 @@ public class AddTripPresenter implements AddTripContract.AddTripPresenter {
 
     public AddTripPresenter(AddTripContract.AddTripView addTripView) {
         this.addTripView = addTripView;
-        realTime = new RealTime();
+        realTime = new RealTime(this);
     }
 
     @Override
     public void addTrip(String tripName, String startPoint, String endPoint, String timerText, String date, String status, String direction, String repeat) {
         realTime.addTrip(new Trip(tripName, startPoint, endPoint, date, timerText, status, direction, repeat));
-        addTripView.setAlarm();
-        onSuccess();
+
     }
 
     @Override
@@ -36,6 +35,10 @@ public class AddTripPresenter implements AddTripContract.AddTripPresenter {
     public void onSuccess() {
         addTripView.goToHomePage();
     }
-
-
+    @Override
+   public void setAlarm(Trip trip,String key)
+   {
+       addTripView.setAlarm(trip,key);
+       onSuccess();
+   }
 }

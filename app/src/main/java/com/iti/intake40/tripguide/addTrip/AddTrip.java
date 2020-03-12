@@ -23,7 +23,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
@@ -31,6 +30,7 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.iti.intake40.tripguide.R;
+import com.iti.intake40.tripguide.model.Trip;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -91,7 +91,7 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
             public void onClick(View v) {
                 if (checkValidation()) {
                     // edit
-                    if (editData != null) {
+                    if (editData.hasExtra("key")) {
                         addTripPresenter.editTrip(tripName.getText().toString().trim(),
                                 startPoint.getText().toString().trim(),
                                 endPoint.getText().toString().trim(),
@@ -118,9 +118,6 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
                 }
             }
         });
-
-
-
     }
 
     // show Date picker
@@ -236,6 +233,7 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
 
     // select points
     private void getLocations(int fragment, final TextView result) {
+      //  result.setText("aaaa");
         final AutocompleteSupportFragment autocompleteSupportFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(fragment);
         autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.LAT_LNG, Place.Field.NAME));
         // for edit
@@ -270,7 +268,7 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
 
     @Override
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void setAlarm() {
+    public void setAlarm(Trip trip, String key) {
         calendar = android.icu.util.Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.YEAR, selectedDate.getYear());
@@ -280,6 +278,10 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
         calendar.set(Calendar.MINUTE, selectedTime.getMinute());
         calendar.set(Calendar.SECOND, 0);
         brodcastIntent = new Intent(AddTrip.this, AlarmBroadCast.class);
+        brodcastIntent.putExtra("tripName",trip.getTripName());
+        brodcastIntent.putExtra("key",key);
+        brodcastIntent.putExtra("from",trip.getStartPoint());
+        brodcastIntent.putExtra("to",trip.getEndPoint());
         pendingIntent = PendingIntent.getBroadcast(AddTrip.this, 0, brodcastIntent, 0);
         alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmMgr.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
@@ -327,7 +329,5 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
             direction.setSelection(direction_index,true);
         }
     }
-
-
 
 }

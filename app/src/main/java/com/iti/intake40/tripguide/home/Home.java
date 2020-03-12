@@ -32,6 +32,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.iti.intake40.tripguide.R;
 import com.iti.intake40.tripguide.login.Login;
+import com.iti.intake40.tripguide.model.RealTime;
 
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
@@ -43,7 +44,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     private View header;
     private Intent loginIntent;
     private Intent notificationIntent;
-
+    private UpComingFragment upComingFragment;
     // notification
     private final String CHANNEL_ID = "personal_notification";
     private final int NOTIFICATION_ID = 001;
@@ -62,8 +63,10 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         setViews();
         // set Selected Fragment
         if (savedInstanceState == null) {
+            upComingFragment = new UpComingFragment();
+            upComingFragment.set_context(this);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new UpComingFragment(this)).commit();
+                    upComingFragment).commit();
             navigationView.setCheckedItem(R.id.nav_upComming);
         }
         // setEmail
@@ -72,18 +75,28 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 emailDrawer.setText(userIntent.getExtras().getString("Email"));
         }
 
-        notificationIntent = getIntent();
+        // notification
         if (notificationIntent != null) {
-            if (notificationIntent.hasExtra("flag")) {
-                if (notificationIntent.getExtras().getString("flag").equalsIgnoreCase("notification")) {
-                    ringConfiguration();
-                }
+            if (notificationIntent.hasExtra("tripKey")) {
+                //  if (notificationIntent.getExtras().getString("flag").equalsIgnoreCase("notification")) {
+                System.out.println("BroadCast arrive");
+                setAlarmConfiguration(notificationIntent.getExtras().getString("tripName"),
+                        notificationIntent.getExtras().getString("from"),
+                        notificationIntent.getExtras().getString("to"),
+                        notificationIntent.getExtras().getString("tripKey"));
+                // }
             }
         }
+        // reopen notification
+        if (notificationIntent.hasExtra("reopen")) {
+                 setAlarmConfiguration(notificationIntent.getExtras().getString("tripName"),
+                         notificationIntent.getExtras().getString("from"),
+                         notificationIntent.getExtras().getString("to"),
+                         notificationIntent.getExtras().getString("tripKey"));
+            }
 
 
     }
-
 
     @Override
     public void onBackPressed() {
@@ -97,8 +110,10 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_upComming:
+                upComingFragment = new UpComingFragment();
+                upComingFragment.set_context(this);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new UpComingFragment(this)).commit();
+                        upComingFragment).commit();
                 break;
             case R.id.nav_history:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -126,6 +141,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         userIntent = getIntent();
         header = navigationView.getHeaderView(0);
         emailDrawer = header.findViewById(R.id.drawer_mail);
+        notificationIntent = getIntent();
 
     }
 
@@ -141,10 +157,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         super.onStart();
     }
 
-
     // notifications
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void ringConfiguration() {
+    private void setAlarmConfiguration(String tripName, final String from, final String to,final String tripKey) {
         alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         if (alarmUri == null) {
             alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -154,14 +169,12 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             ringtone.setLooping(true);
         }
         ringtone.play();
-
-
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Home.this);
-        alertDialogBuilder.setMessage("Your Trip Started Now :)");
+        alertDialogBuilder.setMessage(tripName+ "  Coming ");
         alertDialogBuilder.setNeutralButton("Later", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                notification();
                 stopRing();
+                notification();
             }
         });
 
@@ -171,6 +184,10 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 stopRing();
                 flag = true;
                 notification();
+                new RealTime().makeDone(tripKey);
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=" + from + "&daddr=" +
+                        to));
+                startActivity(mapIntent);
             }
         });
 
@@ -179,15 +196,16 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             public void onClick(DialogInterface arg0, int arg1) {
                 Toast.makeText(Home.this, "Trip Canceled", Toast.LENGTH_LONG).show();
                 stopRing();
+                new RealTime().cancelTrip(tripKey);
                 flag = true;
                 notification();
+
             }
         });
         alertDialog = alertDialogBuilder.create();
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.show();
     }
-
 
     // check versions .
     public void notification() {
@@ -212,11 +230,20 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 // Set the intent that will fire when the user taps the notification
                 .setAutoCancel(true).setOngoing(true);
         Intent intent = new Intent(this, Home.class);
+        intent.putExtra("reopen", "reopen");
+        intent.putExtra("tripKey",notificationIntent.getExtras().getString("tripKey"));
+        intent.putExtra("tripName",notificationIntent.getExtras().getString("tripName"));
+        intent.putExtra("from",notificationIntent.getExtras().getString("from"));
+        intent.putExtra("to", notificationIntent.getExtras().getString("to"));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         builder.setContentIntent(pendingIntent);
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(NOTIFICATION_ID, builder.build());
+        if (flag == false) {
+            notificationManager.notify(NOTIFICATION_ID, builder.build());
+        } else {
+            notificationManager.cancel(NOTIFICATION_ID);
+        }
     }
 
     // version more than 8 .
@@ -224,10 +251,14 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void show_Notification() {
         Intent intent = new Intent(getApplicationContext(), Home.class);
-        intent.putExtra("flag","notification");
+        intent.putExtra("reopen", "reopen");
+        intent.putExtra("tripKey",notificationIntent.getExtras().getString("tripKey"));
+        intent.putExtra("tripName",notificationIntent.getExtras().getString("tripName"));
+        intent.putExtra("from",notificationIntent.getExtras().getString("from"));
+        intent.putExtra("to", notificationIntent.getExtras().getString("to"));
         String CHANNEL_ID = "MYCHANNEL";
         NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, "name", NotificationManager.IMPORTANCE_LOW);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 1, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         notification = new Notification.Builder(getApplicationContext(), CHANNEL_ID)
                 .setContentText(" Return to Your Trip Again :) ")
                 .setContentTitle("Trip Guide")
@@ -245,5 +276,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             notificationManager.cancel(NOTIFICATION_ID);
         }
     }
+
 
 }
