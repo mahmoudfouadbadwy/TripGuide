@@ -23,6 +23,7 @@ public class FireBaseModel {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             signUpPresenter.onSuccess();
+
                         } else {
                             // If sign in fails, display a message to the user.
                             signUpPresenter.onFailure();

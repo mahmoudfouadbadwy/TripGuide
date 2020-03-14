@@ -21,15 +21,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.iti.intake40.tripguide.R;
+<<<<<<< HEAD:app/src/main/java/com/iti/intake40/tripguide/home/RecycleAdapter.java
 import com.iti.intake40.tripguide.floatingpoint.ShowMap;
+=======
+import com.iti.intake40.tripguide.addTrip.AddTrip;
+>>>>>>> 9a6cafb3f8d19380d6673fb3dc0b96e933c23a88:app/src/main/java/com/iti/intake40/tripguide/home/UpcomingAdapter.java
 import com.iti.intake40.tripguide.model.RealTime;
 import com.iti.intake40.tripguide.model.Trip;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> implements PopupMenu.OnMenuItemClickListener {
+public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHolder> implements PopupMenu.OnMenuItemClickListener {
     View view;
     Context _context;
     List<Trip> trips;
@@ -45,7 +50,13 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     EditText note_content;
     AlertDialog alertDialog;
     AlertDialog.Builder builder;
+<<<<<<< HEAD:app/src/main/java/com/iti/intake40/tripguide/home/RecycleAdapter.java
     public RecycleAdapter(Context _context, List<Trip> trips) {
+=======
+    Intent editIntent;
+
+    UpcomingAdapter(Context _context, List<Trip> trips) {
+>>>>>>> 9a6cafb3f8d19380d6673fb3dc0b96e933c23a88:app/src/main/java/com/iti/intake40/tripguide/home/UpcomingAdapter.java
         this._context = _context;
         this.trips = trips;
     }
@@ -53,7 +64,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(_context).inflate(R.layout.custom_card, parent, false));
+        return new ViewHolder(LayoutInflater.from(_context).inflate(R.layout.upcoming_card, parent, false));
     }
 
     @Override
@@ -88,8 +99,8 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 _position = position;
-               model = new RealTime(trips.get(_position).getKey(),RecycleAdapter.this);
-               model.getNotes();
+                model = new RealTime(trips.get(_position).getKey(), UpcomingAdapter.this);
+                model.getNotes();
             }
         });
 
@@ -124,9 +135,9 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 if (!note_content.getText().toString().trim().isEmpty()) {
-                    model.addNote(note_content.getText().toString(), trips.get(_position).getKey());
+                    model.addNote(note_content.getText().toString(),trips.get(_position).getKey());
                     noteDialog.dismiss();
-                    Toast.makeText(_context,"Note Added Successfully",Toast.LENGTH_LONG).show();
+                    Toast.makeText(_context, "Note Added Successfully", Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -146,30 +157,35 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
 
     // show notes dialog
-    public void showNotes(ArrayList<String> notes)
-    {
+    public void showNotes(ArrayList<String> notes) {
         CharSequence[] myNoteArray = new CharSequence[notes.size()];
-        for(int i = 0; i < notes.size(); i++) {
+        for (int i = 0; i < notes.size(); i++) {
             myNoteArray[i] = notes.get(i);
         }
-        AlertDialog.Builder builder=new AlertDialog.Builder(_context);
-        builder.setTitle("Notes");
-        builder.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
 
-            }
-        });
-        builder.setItems(myNoteArray, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-        builder.create().show();
+        if (myNoteArray.length >0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(_context);
+            builder.setTitle("Notes");
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            builder.setItems(myNoteArray, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+            builder.create().show();
+        }
+        else
+        {
+            Toast.makeText(_context,"No Notes Available",Toast.LENGTH_SHORT).show();
+        }
     }
 
-    public void showAlertDialog(String msg)
-    {
+    public void showAlertDialog(String msg) {
         builder = new AlertDialog.Builder(_context);
         builder.setMessage(msg);
         builder.setTitle("Attention");
@@ -178,7 +194,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                model =  new RealTime();
+                model = new RealTime();
                 model.deleteTrip(trips.get(_position).getKey());
             }
         });
@@ -188,9 +204,22 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
                 alertDialog.dismiss();
             }
         });
-        alertDialog =builder.create();
+        alertDialog = builder.create();
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.show();
+    }
+
+    private void editTrip() {
+        editIntent = new Intent(_context, AddTrip.class);
+        editIntent.putExtra("tripName",trips.get(_position).getTripName());
+        editIntent.putExtra("tripDate",trips.get(_position).getDay());
+        editIntent.putExtra("tripTime",trips.get(_position).getTime());
+        editIntent.putExtra("from",trips.get(_position).getStartPoint());
+        editIntent.putExtra("to",trips.get(_position).getEndPoint());
+        editIntent.putExtra("direction",trips.get(_position).getDirection());
+        editIntent.putExtra("repeat",trips.get(_position).getRepeating());
+        editIntent.putExtra("key",trips.get(_position).getKey());
+        _context.startActivity(editIntent);
     }
 
     @Override
@@ -207,7 +236,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
                 model.makeDone(trips.get(_position).getKey());
                 break;
             case R.id.edit:
-                //   editTrip();
+                   editTrip();
                 break;
             case R.id.cancel_menu:
                 model.cancelTrip(trips.get(_position).getKey());
