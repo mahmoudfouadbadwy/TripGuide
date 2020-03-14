@@ -1,15 +1,10 @@
-package com.iti.intake40.tripguide.floatingpoint;
+package com.iti.intake40.tripguide.floatingIcon;
 
-import android.app.ActivityManager;
 import android.app.Service;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PixelFormat;
-import android.net.Uri;
 import android.os.IBinder;
-import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;

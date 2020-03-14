@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.iti.intake40.tripguide">
-<<<<<<< HEAD
+
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
-=======
+
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
->>>>>>> 9a6cafb3f8d19380d6673fb3dc0b96e933c23a88
+
     <application
         android:name=".model.FireBaseSettings"
         android:allowBackup="true"
@@ -20,20 +20,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< HEAD
+
         <service
-            android:name=".floatingpoint.FloatingViewService"
+            android:name=".floatingIcon.FloatingViewService"
             android:enabled="true"
             android:exported="true"></service>
+        <activity
+            android:name=".floatingIcon.ShowMap"
+            android:theme="@style/Theme.AppCompat"/>
 
-        <activity
-            android:name=".floatingpoint.ShowMap"
-            android:theme="@style/Theme.AppCompat" />
-        <activity
-            android:name=".floatingpoint.NotesDialogu"
-            android:theme="@style/NoActionBarForDialog" />
-        <activity android:name=".addNote.AddNote" />
-=======
         <receiver
             android:name=".addTrip.AlarmBroadCast"
             android:enabled="true"
@@ -43,7 +38,6 @@
             </intent-filter>
         </receiver>
 
->>>>>>> 9a6cafb3f8d19380d6673fb3dc0b96e933c23a88
         <activity
             android:name=".home.Home"
             android:theme="@style/AppTheme.noActionBar" />

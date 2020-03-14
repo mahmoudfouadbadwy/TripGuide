@@ -1,4 +1,4 @@
-package com.iti.intake40.tripguide.floatingpoint;
+package com.iti.intake40.tripguide.floatingIcon;
 
 import androidx.appcompat.app.AppCompatActivity;
 

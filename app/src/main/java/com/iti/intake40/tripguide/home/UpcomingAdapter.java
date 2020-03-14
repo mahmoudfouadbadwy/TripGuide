@@ -1,11 +1,9 @@
 package com.iti.intake40.tripguide.home;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,16 +21,17 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.iti.intake40.tripguide.R;
-<<<<<<< HEAD:app/src/main/java/com/iti/intake40/tripguide/home/RecycleAdapter.java
-import com.iti.intake40.tripguide.floatingpoint.ShowMap;
-=======
+
+import com.iti.intake40.tripguide.floatingIcon.ShowMap;
+
 import com.iti.intake40.tripguide.addTrip.AddTrip;
->>>>>>> 9a6cafb3f8d19380d6673fb3dc0b96e933c23a88:app/src/main/java/com/iti/intake40/tripguide/home/UpcomingAdapter.java
+
 import com.iti.intake40.tripguide.model.RealTime;
 import com.iti.intake40.tripguide.model.Trip;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHolder> implements PopupMenu.OnMenuItemClickListener {
     View view;
@@ -50,13 +49,9 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
     EditText note_content;
     AlertDialog alertDialog;
     AlertDialog.Builder builder;
-<<<<<<< HEAD:app/src/main/java/com/iti/intake40/tripguide/home/RecycleAdapter.java
-    public RecycleAdapter(Context _context, List<Trip> trips) {
-=======
     Intent editIntent;
 
     UpcomingAdapter(Context _context, List<Trip> trips) {
->>>>>>> 9a6cafb3f8d19380d6673fb3dc0b96e933c23a88:app/src/main/java/com/iti/intake40/tripguide/home/UpcomingAdapter.java
         this._context = _context;
         this.trips = trips;
     }
