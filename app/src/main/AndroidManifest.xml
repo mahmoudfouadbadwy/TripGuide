@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.iti.intake40.tripguide">
 
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <application
         android:name=".model.FireBaseSettings"
         android:allowBackup="true"
@@ -10,7 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".addNote.AddNote"></activity>
+        <service
+            android:name=".floatingpoint.FloatingViewService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity
+            android:name=".floatingpoint.ShowMap"
+            android:theme="@style/Theme.AppCompat" />
+        <activity
+            android:name=".floatingpoint.NotesDialogu"
+            android:theme="@style/NoActionBarForDialog" />
+        <activity android:name=".addNote.AddNote" />
         <activity
             android:name=".home.Home"
             android:theme="@style/AppTheme.noActionBar" />

@@ -1,5 +1,6 @@
 package com.iti.intake40.tripguide.home;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,6 +22,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.iti.intake40.tripguide.R;
+import com.iti.intake40.tripguide.floatingpoint.ShowMap;
 import com.iti.intake40.tripguide.model.RealTime;
 import com.iti.intake40.tripguide.model.Trip;
 
@@ -43,7 +45,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     EditText note_content;
     AlertDialog alertDialog;
     AlertDialog.Builder builder;
-    RecycleAdapter(Context _context, List<Trip> trips) {
+    public RecycleAdapter(Context _context, List<Trip> trips) {
         this._context = _context;
         this.trips = trips;
     }
@@ -62,11 +64,15 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         holder.getStatus().setText(trips.get(position).getStatus());
         holder.getFrom().setText("From : " + trips.get(position).getStartPoint());
         holder.getTo().setText("To : " + trips.get(position).getEndPoint());
+
         holder.getStart().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=" + holder.getFrom().getText() + "&daddr=" +
-                        holder.getTo().getText()));
+
+                Intent mapIntent = new Intent(_context, ShowMap.class);
+                mapIntent.putExtra("startPoint" ,  holder.getFrom().getText());
+                mapIntent.putExtra("endpoint",holder.getTo().getText());
+
                 _context.startActivity(mapIntent);
             }
         });
