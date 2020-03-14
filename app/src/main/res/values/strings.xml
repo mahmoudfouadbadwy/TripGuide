@@ -46,7 +46,7 @@
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
     <string name="other">Other</string>
-    <string name="NoTrip">No Ttip Available</string>
+    <string name="NoTrip">There Is No Upcoming Trips</string>
     <string name="StartTrip">Start Trip</string>
     <string name="TripNote">Note</string>
 
@@ -58,5 +58,8 @@
     <string name="AddNote">Save Note</string>
     <string name="notecontent_hint">Enter Your Note Here</string>
     <string name="cancelNote">Cancel</string>
+    <string name="history_text">There Is No Trips In Hisory</string>
+    <string name="history_note">Show Note</string>
+    <string name="history_delete">Delete</string>
 
 </resources>

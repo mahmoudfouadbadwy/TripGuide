@@ -1,16 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/history_recycle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/noHistoryTrips"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/history"
-        android:textSize="30dp"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-    </TextView>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_nolist" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/history_text"
+            android:textSize="30sp" />
+    </LinearLayout>
+</FrameLayout>

@@ -29,7 +29,7 @@ import com.iti.intake40.tripguide.model.Trip;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> implements PopupMenu.OnMenuItemClickListener {
+public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHolder> implements PopupMenu.OnMenuItemClickListener {
     View view;
     Context _context;
     List<Trip> trips;
@@ -47,7 +47,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     AlertDialog.Builder builder;
     Intent editIntent;
 
-    RecycleAdapter(Context _context, List<Trip> trips) {
+    UpcomingAdapter(Context _context, List<Trip> trips) {
         this._context = _context;
         this.trips = trips;
     }
@@ -55,7 +55,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(_context).inflate(R.layout.custom_card, parent, false));
+        return new ViewHolder(LayoutInflater.from(_context).inflate(R.layout.upcoming_card, parent, false));
     }
 
     @Override
@@ -86,7 +86,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 _position = position;
-                model = new RealTime(trips.get(_position).getKey(), RecycleAdapter.this);
+                model = new RealTime(trips.get(_position).getKey(), UpcomingAdapter.this);
                 model.getNotes();
             }
         });
@@ -122,7 +122,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 if (!note_content.getText().toString().trim().isEmpty()) {
-                    model.addNote(note_content.getText().toString(), trips.get(_position).getKey());
+                    model.addNote(note_content.getText().toString(),trips.get(_position).getKey());
                     noteDialog.dismiss();
                     Toast.makeText(_context, "Note Added Successfully", Toast.LENGTH_LONG).show();
 

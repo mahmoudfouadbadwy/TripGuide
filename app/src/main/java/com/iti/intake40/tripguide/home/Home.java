@@ -45,6 +45,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     private Intent loginIntent;
     private Intent notificationIntent;
     private UpComingFragment upComingFragment;
+    private HistoryFragment historyFragment;
     // notification
     private final String CHANNEL_ID = "personal_notification";
     private final int NOTIFICATION_ID = 001;
@@ -68,6 +69,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     upComingFragment).commit();
             navigationView.setCheckedItem(R.id.nav_upComming);
+            setTitle("Upcoming Trips");
         }
         // setEmail
         if (userIntent != null) {
@@ -114,10 +116,14 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 upComingFragment.set_context(this);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         upComingFragment).commit();
+                setTitle("Upcoming Trips");
                 break;
             case R.id.nav_history:
+                historyFragment = new HistoryFragment();
+                historyFragment.set_context(this);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new HistoryFragment()).commit();
+                        historyFragment).commit();
+               setTitle("History");
                 break;
             case R.id.nav_logOut:
                 logOut();

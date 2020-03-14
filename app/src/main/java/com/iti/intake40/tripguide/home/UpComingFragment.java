@@ -32,6 +32,11 @@ public class UpComingFragment extends Fragment implements View.OnClickListener {
     private View view;
     private FloatingActionButton floatingActionButton;
     private Context _context;
+    private Intent addTripIntent;
+    private DatabaseReference mTripReference;
+    private ArrayList<Trip> trips;
+    private Trip trip;
+    private ValueEventListener tripListener;
 
     public Context get_context() {
         return _context;
@@ -41,11 +46,6 @@ public class UpComingFragment extends Fragment implements View.OnClickListener {
         this._context = _context;
     }
 
-    private Intent addTripIntent;
-    private DatabaseReference mTripReference;
-    private ArrayList<Trip> trips;
-    private Trip trip;
-    private ValueEventListener tripListener;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -76,7 +76,7 @@ public class UpComingFragment extends Fragment implements View.OnClickListener {
         recyclerView = view.findViewById(R.id.Trips_RecycleView);
         manager = new  LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(new RecycleAdapter(getContext(),trips));
+        recyclerView.setAdapter(new UpcomingAdapter(getContext(),trips));
         floatingActionButton = view.findViewById(R.id.floatingActionButton);
         floatingActionButton.setOnClickListener(this);
         noTrips = view.findViewById(R.id.No_Trips_Layout);
@@ -120,7 +120,7 @@ public class UpComingFragment extends Fragment implements View.OnClickListener {
     {
         if (trips.size()>0)
         {
-            recyclerView.setAdapter(new RecycleAdapter(getContext(),trips));
+            recyclerView.setAdapter(new UpcomingAdapter(getContext(),trips));
             noTrips.setVisibility(View.INVISIBLE);
             recyclerView.setVisibility(View.VISIBLE);
         }
