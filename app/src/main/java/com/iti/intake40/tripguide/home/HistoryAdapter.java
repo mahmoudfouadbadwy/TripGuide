@@ -11,17 +11,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.iti.intake40.tripguide.R;
 import com.iti.intake40.tripguide.model.RealTime;
 import com.iti.intake40.tripguide.model.Trip;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +29,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     List<Trip> trips;
     Animation fadeIn;
     Animation fadeOut;
+    AlertDialog.Builder builder;
+    AlertDialog alertDialog;
+    int _postition;
 
     HistoryAdapter(Context _context, List<Trip> trips) {
         this._context = _context;
@@ -63,12 +62,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             public void onClick(View v) {
                 if (animationFlag == false) {
                     animationFlag = true;
-                    holder.getDetails().setVisibility(View.VISIBLE);
-                    holder.getDetails().startAnimation(fadeIn);
+                    v.findViewById(R.id.details).setVisibility(View.VISIBLE);
+                    v.findViewById(R.id.details).startAnimation(fadeIn);
                 } else {
                     animationFlag = false;
-                    holder.getDetails().setVisibility(View.GONE);
-                    holder.getDetails().startAnimation(fadeOut);
+                    v.findViewById(R.id.details).setVisibility(View.GONE);
+                    v.findViewById(R.id.details).startAnimation(fadeOut);
                 }
             }
         });
@@ -77,7 +76,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.getDelete().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new RealTime().deleteTrip(trips.get(position).getKey());
+               _postition = position;
+               showAlertDialog("Are You Sure You Want To Delete Trip ?");
             }
         });
 
@@ -85,9 +85,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.getNote().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new RealTime(trips.get(position).getKey(),HistoryAdapter.this).getNotes();
+                new RealTime(trips.get(position).getKey(), HistoryAdapter.this).getNotes();
             }
         });
+
+
     }
 
     @Override
@@ -102,7 +104,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             myNoteArray[i] = notes.get(i);
         }
 
-        if (myNoteArray.length >0) {
+        if (myNoteArray.length > 0) {
             AlertDialog.Builder builder = new AlertDialog.Builder(_context);
             builder.setTitle("Notes");
             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -117,11 +119,32 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
                 }
             });
             builder.create().show();
+        } else {
+            Toast.makeText(_context, "No Notes Available", Toast.LENGTH_SHORT).show();
         }
-        else
-        {
-            Toast.makeText(_context,"No Notes Available",Toast.LENGTH_SHORT).show();
-        }
+    }
+
+    public void showAlertDialog(String msg) {
+        builder = new AlertDialog.Builder(_context);
+        builder.setMessage(msg);
+        builder.setTitle("Attention");
+        builder.setIcon(R.drawable.error);
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                new RealTime().deleteTrip(trips.get(_postition).getKey());
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog = builder.create();
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.show();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -135,13 +158,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         Button note;
         Button delete;
         CardView historyCard;
-        ConstraintLayout details;
 
-        public ConstraintLayout getDetails() {
-            if (details == null)
-                details = view.findViewById(R.id.details);
-            return details;
-        }
 
         public TextView getTripTitle() {
             if (tripTitle == null)
