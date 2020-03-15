@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.iti.intake40.tripguide.addTrip.AddTripPresenter;
+import com.iti.intake40.tripguide.floatingIcon.FloatingViewService;
 import com.iti.intake40.tripguide.home.HistoryAdapter;
 import com.iti.intake40.tripguide.home.UpcomingAdapter;
 
@@ -24,6 +25,7 @@ public class RealTime {
     private HistoryAdapter _HistoryAdapter;
     private AddTripPresenter _AddTripPresenter;
     private DatabaseReference addNoteRef;
+    FloatingViewService _floatingViewService;
 
     public RealTime() {
         if (mDatabase == null) {
@@ -53,6 +55,19 @@ public class RealTime {
 
     public RealTime(String key, HistoryAdapter historyAdapter) {
         _HistoryAdapter = historyAdapter;
+        if (noteReference == null) {
+            user = FirebaseAuth.getInstance().getCurrentUser();
+            noteReference = FirebaseDatabase.getInstance().
+                    getReference("TripGuide").
+                    child(user.getUid()).child(key).child("Notes");
+        }
+        if (noteList == null) {
+            noteList = new ArrayList<>();
+        }
+    }
+
+    public RealTime(String key, FloatingViewService floatingViewService) {
+        _floatingViewService = floatingViewService;
         if (noteReference == null) {
             user = FirebaseAuth.getInstance().getCurrentUser();
             noteReference = FirebaseDatabase.getInstance().
@@ -123,7 +138,10 @@ public class RealTime {
                 } else if (_HistoryAdapter != null) {
                     _HistoryAdapter.showNotes(noteList);
                 }
-
+                if(_floatingViewService !=null)
+                {
+                   _floatingViewService.showNotes(noteList);
+                }
             }
 
             @Override

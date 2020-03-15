@@ -15,14 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.iti.intake40.tripguide.R;
+import com.iti.intake40.tripguide.model.RealTime;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class FloatingViewService extends Service {
-
-
     private WindowManager mWindowManager;
     private View mFloatingView;
     private View kapali_widget;
@@ -31,8 +30,7 @@ public class FloatingViewService extends Service {
     RecyclerView recyclerView;
     RecycleAdapter adapter;
     private Context context;
-    List<String> list ;
-
+    List<String> list;
 
 
     public FloatingViewService() {
@@ -44,8 +42,7 @@ public class FloatingViewService extends Service {
     }
 
     @Override
-    public void onCreate()
-    {
+    public void onCreate() {
         super.onCreate();
         context = this;
         //getting the widget layout from xml using layout inflater
@@ -73,18 +70,12 @@ public class FloatingViewService extends Service {
         //getting the collapsed and expanded view from the floating view
         kapali_widget = mFloatingView.findViewById(R.id.layoutCollapsed);
         acik_widget = mFloatingView.findViewById(R.id.layoutExpanded);
-
         recyclerView = acik_widget.findViewById(R.id.recycle);
-
         list = new ArrayList<>();
-        list.add("bobos");
-
-
-
-        adapter =new RecycleAdapter(list,this);
+        new RealTime(ShowMap.tripKey, this).getNotes();
+        adapter = new RecycleAdapter(list, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
 
         //adding click listener to close button and expanded view
         mFloatingView.findViewById(R.id.buttonClose).setOnClickListener(new View.OnClickListener() {
@@ -98,21 +89,19 @@ public class FloatingViewService extends Service {
         acik_widget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("clicked know !!!");
                 kapali_widget.setVisibility(View.VISIBLE);
                 acik_widget.setVisibility(View.GONE);
             }
         });
 
 
-
         //adding an touchlistener to make drag movement of the floating widget
-        mFloatingView.findViewById(R.id.relativeLayoutParent).setOnTouchListener(new View.OnTouchListener()
-        {
+        mFloatingView.findViewById(R.id.relativeLayoutParent).setOnTouchListener(new View.OnTouchListener() {
             private int initialX;
             private int initialY;
             private float initialTouchX;
             private float initialTouchY;
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
@@ -142,7 +131,6 @@ public class FloatingViewService extends Service {
     }
 
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -151,10 +139,11 @@ public class FloatingViewService extends Service {
     }
 
 
-
-
-
-
-
+    public void showNotes( List<String> list)
+    {
+        adapter = new RecycleAdapter(list, this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
 }
 

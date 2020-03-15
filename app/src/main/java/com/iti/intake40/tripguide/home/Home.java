@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -31,6 +32,7 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.iti.intake40.tripguide.R;
+import com.iti.intake40.tripguide.floatingIcon.ShowMap;
 import com.iti.intake40.tripguide.login.Login;
 import com.iti.intake40.tripguide.model.RealTime;
 
@@ -185,9 +187,12 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 flag = true;
                 notification();
                 new RealTime().makeDone(tripKey);
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=" + from + "&daddr=" +
-                        to));
-                startActivity(mapIntent);
+                Intent mapIntent = new Intent(Home.this, ShowMap.class);
+                mapIntent.putExtra("startPoint" , from);
+                mapIntent.putExtra("endpoint",to);
+                mapIntent.putExtra("key",tripKey);
+               startActivity(mapIntent);
+
             }
         });
 

@@ -19,14 +19,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="visible">
+
             <de.hdodenhof.circleimageview.CircleImageView
 
                 android:id="@+id/collapsed_iv"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="8dp"
-                android:src="@drawable/moon"
-                />
+                android:src="@drawable/logo" />
             <ImageView
                 android:id="@+id/buttonClose"
                 android:layout_width="25dp"

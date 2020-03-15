@@ -74,12 +74,12 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
         holder.getStart().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent mapIntent = new Intent(_context, ShowMap.class);
                 mapIntent.putExtra("startPoint" ,  holder.getFrom().getText());
                 mapIntent.putExtra("endpoint",holder.getTo().getText());
-
+                mapIntent.putExtra("key",trips.get(position).getKey());
                 _context.startActivity(mapIntent);
+                new RealTime().makeDone(trips.get(position).getKey());
             }
         });
         holder.getOptions().setOnClickListener(new View.OnClickListener() {
