@@ -11,13 +11,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.iti.intake40.tripguide.R;
 import com.iti.intake40.tripguide.model.RealTime;
 import com.iti.intake40.tripguide.model.Trip;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,13 +28,12 @@ import java.util.List;
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
     View view;
     Context _context;
-    Boolean animationFlag = false;
     List<Trip> trips;
     Animation fadeIn;
     Animation fadeOut;
-    AlertDialog.Builder builder;
-    AlertDialog alertDialog;
-    int _postition;
+    AlertDialog.Builder builderNote;
+    AlertDialog alertDialog_note;
+    private int _position;
 
     HistoryAdapter(Context _context, List<Trip> trips) {
         this._context = _context;
@@ -60,12 +62,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.getHistoryCard().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (animationFlag == false) {
-                    animationFlag = true;
+                if (v.findViewById(R.id.details).getVisibility() == View.GONE) {
                     v.findViewById(R.id.details).setVisibility(View.VISIBLE);
                     v.findViewById(R.id.details).startAnimation(fadeIn);
                 } else {
-                    animationFlag = false;
                     v.findViewById(R.id.details).setVisibility(View.GONE);
                     v.findViewById(R.id.details).startAnimation(fadeOut);
                 }
@@ -76,8 +76,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.getDelete().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               _postition = position;
-               showAlertDialog("Are You Sure You Want To Delete Trip ?");
+                _position = position;
+                showAlertDialog("Are You Sure You Want To Delete Trip ?");
             }
         });
 
@@ -125,26 +125,26 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     }
 
     public void showAlertDialog(String msg) {
-        builder = new AlertDialog.Builder(_context);
-        builder.setMessage(msg);
-        builder.setTitle("Attention");
-        builder.setIcon(R.drawable.error);
+        builderNote = new AlertDialog.Builder(_context);
+        builderNote.setMessage(msg);
+        builderNote.setTitle("Attention");
+        builderNote.setIcon(R.drawable.error);
 
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builderNote.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                new RealTime().deleteTrip(trips.get(_postition).getKey());
+                new RealTime().deleteTrip(trips.get(_position).getKey());
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builderNote.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                alertDialog.dismiss();
+                alertDialog_note.dismiss();
             }
         });
-        alertDialog = builder.create();
-        alertDialog.setCanceledOnTouchOutside(false);
-        alertDialog.show();
+        alertDialog_note = builderNote.create();
+        alertDialog_note.setCanceledOnTouchOutside(false);
+        alertDialog_note.show();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
