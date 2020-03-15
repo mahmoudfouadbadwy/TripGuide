@@ -135,6 +135,9 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
                     Toast.makeText(_context, "Note Added Successfully", Toast.LENGTH_LONG).show();
 
                 }
+                else {
+                    Toast.makeText(_context,"Note Can Not Be Empty ",Toast.LENGTH_LONG).show();
+                }
             }
         });
         // cancel

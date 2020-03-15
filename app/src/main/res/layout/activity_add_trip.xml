@@ -5,21 +5,23 @@
     android:id="@+id/addTripName"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#000000"
     android:orientation="vertical"
     android:weightSum="100"
-    tools:context=".addTrip.AddTrip">
+    tools:context=".addTrip.AddTrip"
+    >
 
     <EditText
         android:id="@+id/tripName"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:layout_weight="10"
-        android:drawableRight="@drawable/tripname"
+        android:background="@drawable/shape"
+        android:drawableRight="@drawable/trip4"
         android:ems="10"
         android:hint="@string/TripName"
         android:inputType="textPersonName" />
@@ -28,9 +30,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_weight="40"
-        android:orientation="vertical"
         android:background="@drawable/shape"
+        android:orientation="vertical"
         android:weightSum="100">
 
         <TextView
@@ -38,21 +42,22 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="5dp"
-            android:layout_weight="17"
-
+            android:layout_weight="25"
+            android:drawableLeft="@drawable/startpoint"
+            android:gravity="center_vertical"
             android:text="@string/StartPoint"
             android:textSize="18sp" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="30"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
+            android:layout_weight="25"
 
             android:background="#ffffee"
             android:orientation="vertical">
@@ -61,8 +66,7 @@
                 android:id="@+id/frag"
                 android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                ></fragment>
+                android:layout_height="wrap_content"></fragment>
 
             <TextView
                 android:id="@+id/startPoint"
@@ -83,8 +87,10 @@
             android:layout_height="0dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_weight="17"
             android:layout_marginBottom="5dp"
+            android:layout_weight="25"
+            android:drawableLeft="@drawable/endpoint"
+            android:gravity="center_vertical"
             android:text="@string/EndPoint"
             android:textSize="18sp" />
 
@@ -93,9 +99,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="20dp"
-            android:layout_weight="30"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
+            android:layout_weight="25"
             android:background="@color/quantum_white_100"
             android:orientation="vertical">
 
@@ -103,8 +109,7 @@
                 android:id="@+id/frag2"
                 android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                ></fragment>
+                android:layout_height="wrap_content"></fragment>
 
             <TextView
                 android:id="@+id/endPoint"
@@ -129,7 +134,9 @@
         android:layout_weight="20"
         android:orientation="horizontal"
         android:weightSum="2"
-        android:background="@drawable/shape">
+        android:background="@drawable/shape"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -145,14 +152,17 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:clickable="true"
-                app:srcCompat="@drawable/clock" />
+                app:srcCompat="@drawable/clock"
+                />
 
             <TextView
                 android:id="@+id/timeText"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="5dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
+                android:background="@drawable/shape"
+                android:gravity="center"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -174,9 +184,11 @@
             <TextView
                 android:id="@+id/calenderText"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="5dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
+                android:background="@drawable/shape"
+                android:gravity="center"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -185,38 +197,49 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="20"
-        android:orientation="horizontal"
-        android:weightSum="2"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="0dp"
+        android:layout_weight="15"
         android:background="@drawable/shape"
-        android:layout_marginTop="20dp">
+        android:orientation="horizontal"
+        android:weightSum="2">
 
         <Spinner
             android:id="@+id/repeating"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="10dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
+            android:background="@drawable/spinner_border"
             android:entries="@array/spinnerRepeating" />
 
         <Spinner
             android:id="@+id/direction"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="30dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
+            android:background="@drawable/spinner_border"
             android:entries="@array/spinnerDirection" />
     </LinearLayout>
 
     <Button
-        android:layout_marginTop="20dp"
         android:id="@+id/addTrip"
-        android:layout_width="120dp"
-        android:layout_height="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_gravity="center"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp"
+        android:layout_weight="8"
+        android:background="@drawable/button"
+
         android:text="@string/saveTrip"
-        />
+        android:textColor="#ffff"
+        android:textSize="30dp" />
 
 </LinearLayout>

@@ -61,5 +61,6 @@
     <string name="history_text">There Is No Trips In Hisory</string>
     <string name="history_note">Show Note</string>
     <string name="history_delete">Delete</string>
+    <string name="logoText">Trip Guide</string>
 
 </resources>

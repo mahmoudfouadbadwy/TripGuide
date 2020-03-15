@@ -28,7 +28,8 @@
             android:gravity="center|bottom"
             android:text="@string/SignUpLogo"
             android:textColor="@android:color/white"
-            android:textSize="36sp" />
+            android:textSize="36sp"
+            android:textStyle="italic" />
 
         <TextView
             android:id="@+id/textView4"
@@ -38,7 +39,8 @@
             android:gravity="center"
             android:text="@string/SignUpTo"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textStyle="italic" />
 
         <TextView
             android:id="@+id/textView5"
@@ -48,7 +50,8 @@
             android:gravity="center"
             android:text="@string/SignUpLogo3"
             android:textColor="@android:color/white"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:textStyle="italic" />
     </LinearLayout>
 
     <LinearLayout

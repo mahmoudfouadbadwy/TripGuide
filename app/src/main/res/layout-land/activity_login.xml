@@ -29,7 +29,8 @@
             android:gravity="center|bottom"
             android:text="@string/logo1"
             android:textColor="@android:color/white"
-            android:textSize="36sp" />
+            android:textSize="36sp"
+            android:textStyle="italic" />
 
         <TextView
 
@@ -41,7 +42,8 @@
             android:gravity="center"
             android:text="@string/logo2"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textStyle="italic" />
 
         <TextView
             android:id="@+id/logo3"
@@ -53,7 +55,8 @@
             android:gravity="center"
             android:text="@string/logo3"
             android:textColor="@android:color/white"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:textStyle="italic" />
 
 
 

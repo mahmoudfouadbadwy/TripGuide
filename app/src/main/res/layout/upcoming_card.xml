@@ -17,13 +17,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="100">
+        android:weightSum="100"
+        android:background="@drawable/shape">
 
         <LinearLayout
             android:id="@+id/top"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="10"
+            android:layout_height="0dp"
+            android:layout_weight="15"
+            android:background="@drawable/shape2"
             android:orientation="horizontal"
             android:padding="5dp"
             android:weightSum="2">
@@ -34,7 +36,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1.8"
                 android:gravity="center|top"
-                android:textSize="18sp"
+                android:textColor="@color/places_text_white_alpha_26"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -49,7 +52,7 @@
         <LinearLayout
             android:id="@+id/details"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="20"
             android:orientation="horizontal"
             android:padding="10dp"
@@ -60,6 +63,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@drawable/border2"
                 android:gravity="center"
                 android:textSize="18sp" />
 
@@ -68,6 +72,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@drawable/border2"
                 android:gravity="center"
                 android:textSize="18sp" />
 
@@ -76,6 +81,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@drawable/border2"
                 android:gravity="center"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -83,8 +89,8 @@
         <LinearLayout
             android:id="@+id/place"
             android:layout_width="match_parent"
-            android:layout_height="94dp"
-            android:layout_weight="40"
+            android:layout_height="0dp"
+            android:layout_weight="45"
             android:orientation="vertical"
             android:padding="10dp">
 
@@ -93,21 +99,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:drawableLeft="@drawable/startpoint"
+                android:gravity="center_vertical"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/To"
                 android:layout_width="match_parent"
-                android:layout_height="36dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:drawableLeft="@drawable/endpoint"
+                android:gravity="center_vertical"
                 android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/buttons"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="30"
+            android:layout_height="0dp"
+            android:layout_weight="20"
             android:orientation="horizontal"
             android:padding="10dp">
 
@@ -115,8 +125,12 @@
                 android:id="@+id/Start"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
                 android:layout_weight="1.5"
-                android:text="@string/StartTrip" />
+                android:background="@drawable/button"
+                android:text="@string/StartTrip"
+                android:textColor=" #f6dff7 " />
 
             <ImageView
                 android:id="@+id/Card_Note"
