@@ -84,6 +84,7 @@ public class RealTime {
         key = mDatabase.child(user.getUid()).push().getKey();
         mDatabase.child(user.getUid()).child(key).setValue(trip);
         mDatabase.keepSynced(true);
+        trip.setKey(key);
         _AddTripPresenter.setAlarm(trip, key);
     }
 

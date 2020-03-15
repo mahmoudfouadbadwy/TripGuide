@@ -3,6 +3,8 @@ package com.iti.intake40.tripguide.addTrip;
 import com.iti.intake40.tripguide.model.RealTime;
 import com.iti.intake40.tripguide.model.Trip;
 
+import java.util.Random;
+
 
 public class AddTripPresenter implements AddTripContract.AddTripPresenter {
     private AddTripContract.AddTripView addTripView;
@@ -15,7 +17,9 @@ public class AddTripPresenter implements AddTripContract.AddTripPresenter {
 
     @Override
     public void addTrip(String tripName, String startPoint, String endPoint, String timerText, String date, String status, String direction, String repeat) {
-        realTime.addTrip(new Trip(tripName, startPoint, endPoint, date, timerText, status, direction, repeat));
+        Trip trip = new Trip(tripName, startPoint, endPoint, date, timerText, status, direction, repeat);
+        trip.setAlarmKey(new Random().nextInt(1000));
+        realTime.addTrip(trip);
     }
 
     @Override

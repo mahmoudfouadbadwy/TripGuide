@@ -182,17 +182,7 @@
             android:textColor=" #b338b5 "
             android:textSize="18sp" />
 
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/signGoogle"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_weight="1"
-            app:buttonSize="wide"
-            app:colorScheme="dark" />
+
 
     </LinearLayout>
 

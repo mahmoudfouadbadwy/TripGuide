@@ -1,6 +1,8 @@
 package com.iti.intake40.tripguide.home;
 
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.iti.intake40.tripguide.R;
 
+import com.iti.intake40.tripguide.addTrip.AlarmBroadCast;
 import com.iti.intake40.tripguide.floatingIcon.ShowMap;
 
 import com.iti.intake40.tripguide.addTrip.AddTrip;
@@ -193,6 +196,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
             public void onClick(DialogInterface dialog, int which) {
                 model = new RealTime();
                 model.deleteTrip(trips.get(_position).getKey());
+                cancelAlarm();
             }
         });
         builderDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -231,12 +235,14 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
                 break;
             case R.id.done_menu:
                 model.makeDone(trips.get(_position).getKey());
+                cancelAlarm();
                 break;
             case R.id.edit:
                    editTrip();
                 break;
             case R.id.cancel_menu:
                 model.cancelTrip(trips.get(_position).getKey());
+                cancelAlarm();
                 break;
             case R.id.delete_menu:
                 showAlertDialog("Are You Sure You Want To Delete Trip ?");
@@ -244,6 +250,18 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
                 break;
         }
         return false;
+    }
+
+    private void cancelAlarm()
+    {
+        Intent brodcastIntent = new Intent(_context, AlarmBroadCast.class);
+        brodcastIntent.putExtra("tripName",trips.get(_position).getTripName());
+        brodcastIntent.putExtra("key",trips.get(_position).getKey());
+        brodcastIntent.putExtra("from",trips.get(_position).getStartPoint());
+        brodcastIntent.putExtra("to",trips.get(_position).getEndPoint());
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(_context, trips.get(_position).getAlarmKey(), brodcastIntent, 0);
+        AlarmManager alarmMgr = (AlarmManager)_context.getSystemService(Context.ALARM_SERVICE);
+        alarmMgr.cancel(pendingIntent);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

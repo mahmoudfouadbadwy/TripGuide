@@ -233,7 +233,6 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
 
     // select points
     private void getLocations(int fragment, final TextView result) {
-        result.setText("aaaa");
         final AutocompleteSupportFragment autocompleteSupportFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(fragment);
         autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.LAT_LNG, Place.Field.NAME));
         // for edit
@@ -283,9 +282,9 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
         brodcastIntent.putExtra("key",key);
         brodcastIntent.putExtra("from",trip.getStartPoint());
         brodcastIntent.putExtra("to",trip.getEndPoint());
-        pendingIntent = PendingIntent.getBroadcast(AddTrip.this, 0, brodcastIntent, 0);
+        pendingIntent = PendingIntent.getBroadcast(AddTrip.this, trip.getAlarmKey(), brodcastIntent, 0);
         alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmMgr.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+        alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
     }
 

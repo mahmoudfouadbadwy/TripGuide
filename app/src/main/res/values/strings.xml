@@ -59,7 +59,7 @@
     <string name="notecontent_hint">Enter Your Note Here</string>
     <string name="cancelNote">Cancel</string>
     <string name="history_text">There Is No Trips In Hisory</string>
-    <string name="history_note">Show Note</string>
+    <string name="history_note">Show Notes</string>
     <string name="history_delete">Delete</string>
     <string name="logoText">Trip Guide</string>
 

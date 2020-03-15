@@ -14,6 +14,16 @@ public class Trip {
     private String repeating;
     private List<String> notes;
 
+    public int getAlarmKey() {
+        return alarmKey;
+    }
+
+    public void setAlarmKey(int alarmKey) {
+        this.alarmKey = alarmKey;
+    }
+
+    private int alarmKey ;
+
     public  Trip()
     {
         this.tripName = tripName;
