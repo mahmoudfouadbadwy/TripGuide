@@ -23,6 +23,7 @@ public class RealTime {
     private UpcomingAdapter _upcomingAdapter;
     private HistoryAdapter _HistoryAdapter;
     private AddTripPresenter _AddTripPresenter;
+    private DatabaseReference addNoteRef;
 
     public RealTime() {
         if (mDatabase == null) {
@@ -31,7 +32,7 @@ public class RealTime {
     }
 
     public RealTime(AddTripPresenter presenter) {
-        _AddTripPresenter =presenter;
+        _AddTripPresenter = presenter;
         if (mDatabase == null) {
             mDatabase = FirebaseDatabase.getInstance().getReference("TripGuide");
         }
@@ -69,11 +70,10 @@ public class RealTime {
         key = mDatabase.child(user.getUid()).push().getKey();
         mDatabase.child(user.getUid()).child(key).setValue(trip);
         mDatabase.keepSynced(true);
-        _AddTripPresenter.setAlarm(trip,key);
+        _AddTripPresenter.setAlarm(trip, key);
     }
 
-    public void editTrip(Trip trip,String key)
-    {
+    public void editTrip(Trip trip, String key) {
         user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase.child(user.getUid()).child(key).child("day").setValue(trip.getDay());
         mDatabase.child(user.getUid()).child(key).child("direction").setValue(trip.getDirection());
@@ -106,18 +106,11 @@ public class RealTime {
 
     public void addNote(String content, String key) {
         user = FirebaseAuth.getInstance().getCurrentUser();
-
         String noteKey;
-        System.out.println("key :"+key);
-        System.out.println("id "+user.getUid());
-        mDatabase = mDatabase.child(user.getUid()).child(key);
-        if (mDatabase.child("Notes").push().getKey() != null)
-        {
-            noteKey = mDatabase.child("Notes").push().getKey();
-            mDatabase.child("Notes").
-                    child(noteKey).setValue(content);
-        }
-        mDatabase.keepSynced(true);
+        addNoteRef = mDatabase.child(user.getUid()).child(key);
+        noteKey = addNoteRef.child("Notes").push().getKey();
+        addNoteRef.child("Notes").child(noteKey).setValue(content);
+        addNoteRef.keepSynced(true);
     }
 
 
@@ -128,12 +121,9 @@ public class RealTime {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     noteList.add(data.getValue().toString());
                 }
-                if(_upcomingAdapter !=null)
-                {
+                if (_upcomingAdapter != null) {
                     _upcomingAdapter.showNotes(noteList);
-                }
-                else if (_HistoryAdapter != null)
-                {
+                } else if (_HistoryAdapter != null) {
                     _HistoryAdapter.showNotes(noteList);
                 }
 

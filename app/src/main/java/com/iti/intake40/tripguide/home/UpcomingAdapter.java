@@ -48,7 +48,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
     TextView tripName_note;
     EditText note_content;
     AlertDialog alertDialog;
-    AlertDialog.Builder builder;
+    AlertDialog.Builder builderDialog;
     Intent editIntent;
 
     UpcomingAdapter(Context _context, List<Trip> trips) {
@@ -133,7 +133,6 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
                     model.addNote(note_content.getText().toString(),trips.get(_position).getKey());
                     noteDialog.dismiss();
                     Toast.makeText(_context, "Note Added Successfully", Toast.LENGTH_LONG).show();
-
                 }
                 else {
                     Toast.makeText(_context,"Note Can Not Be Empty ",Toast.LENGTH_LONG).show();
@@ -162,20 +161,20 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
         }
 
         if (myNoteArray.length >0) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(_context);
-            builder.setTitle("Notes");
-            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            AlertDialog.Builder builder_show = new AlertDialog.Builder(_context);
+            builder_show.setTitle("Notes");
+            builder_show.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
                 }
             });
-            builder.setItems(myNoteArray, new DialogInterface.OnClickListener() {
+            builder_show.setItems(myNoteArray, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                 }
             });
-            builder.create().show();
+            builder_show.create().show();
         }
         else
         {
@@ -184,25 +183,25 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
     }
 
     public void showAlertDialog(String msg) {
-        builder = new AlertDialog.Builder(_context);
-        builder.setMessage(msg);
-        builder.setTitle("Attention");
-        builder.setIcon(R.drawable.error);
+        builderDialog = new AlertDialog.Builder(_context);
+        builderDialog.setMessage(msg);
+        builderDialog.setTitle("Attention");
+        builderDialog.setIcon(R.drawable.error);
 
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builderDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 model = new RealTime();
                 model.deleteTrip(trips.get(_position).getKey());
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builderDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 alertDialog.dismiss();
             }
         });
-        alertDialog = builder.create();
+        alertDialog = builderDialog.create();
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.show();
     }
