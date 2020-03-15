@@ -66,7 +66,6 @@ public class RealTime {
 
     public void addTrip(Trip trip) {
         user = FirebaseAuth.getInstance().getCurrentUser();
-
         key = mDatabase.child(user.getUid()).push().getKey();
         mDatabase.child(user.getUid()).child(key).setValue(trip);
         mDatabase.keepSynced(true);
@@ -103,7 +102,6 @@ public class RealTime {
         mDatabase.keepSynced(true);
     }
 
-
     public void addNote(String content, String key) {
         user = FirebaseAuth.getInstance().getCurrentUser();
         String noteKey;
@@ -112,7 +110,6 @@ public class RealTime {
         addNoteRef.child("Notes").child(noteKey).setValue(content);
         addNoteRef.keepSynced(true);
     }
-
 
     public void getNotes() {
         ValueEventListener postListener = new ValueEventListener() {

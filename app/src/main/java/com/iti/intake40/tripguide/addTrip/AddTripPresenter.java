@@ -16,7 +16,6 @@ public class AddTripPresenter implements AddTripContract.AddTripPresenter {
     @Override
     public void addTrip(String tripName, String startPoint, String endPoint, String timerText, String date, String status, String direction, String repeat) {
         realTime.addTrip(new Trip(tripName, startPoint, endPoint, date, timerText, status, direction, repeat));
-
     }
 
     @Override

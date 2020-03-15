@@ -233,7 +233,7 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
 
     // select points
     private void getLocations(int fragment, final TextView result) {
-      //  result.setText("aaaa");
+        result.setText("aaaa");
         final AutocompleteSupportFragment autocompleteSupportFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(fragment);
         autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.LAT_LNG, Place.Field.NAME));
         // for edit
@@ -269,6 +269,7 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
     @Override
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void setAlarm(Trip trip, String key) {
+        System.out.println("alarm!!!!!!!!!!!!!!!!!!!!!!");
         calendar = android.icu.util.Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.YEAR, selectedDate.getYear());
@@ -285,6 +286,7 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
         pendingIntent = PendingIntent.getBroadcast(AddTrip.this, 0, brodcastIntent, 0);
         alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmMgr.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+
     }
 
     @Override

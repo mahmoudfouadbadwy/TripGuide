@@ -80,24 +80,14 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         // notification
         if (notificationIntent != null) {
             if (notificationIntent.hasExtra("tripKey")) {
-                //  if (notificationIntent.getExtras().getString("flag").equalsIgnoreCase("notification")) {
-                System.out.println("BroadCast arrive");
-                setAlarmConfiguration(notificationIntent.getExtras().getString("tripName"),
+                setAlarmConfiguration();
+                setAlarmDialog(notificationIntent.getExtras().getString("tripName"),
                         notificationIntent.getExtras().getString("from"),
                         notificationIntent.getExtras().getString("to"),
                         notificationIntent.getExtras().getString("tripKey"));
-                // }
+
             }
         }
-        // reopen notification
-        if (notificationIntent.hasExtra("reopen")) {
-                 setAlarmConfiguration(notificationIntent.getExtras().getString("tripName"),
-                         notificationIntent.getExtras().getString("from"),
-                         notificationIntent.getExtras().getString("to"),
-                         notificationIntent.getExtras().getString("tripKey"));
-            }
-
-
     }
 
     @Override
@@ -123,7 +113,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 historyFragment.set_context(this);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         historyFragment).commit();
-               setTitle("History");
+                setTitle("History");
                 break;
             case R.id.nav_logOut:
                 logOut();
@@ -165,7 +155,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
     // notifications
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void setAlarmConfiguration(String tripName, final String from, final String to,final String tripKey) {
+    private void setAlarmConfiguration() {
         alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         if (alarmUri == null) {
             alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -175,12 +165,16 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             ringtone.setLooping(true);
         }
         ringtone.play();
+
+    }
+    private void setAlarmDialog(String tripName, final String from, final String to, final String tripKey) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Home.this);
-        alertDialogBuilder.setMessage(tripName+ "  Coming ");
+        alertDialogBuilder.setMessage(tripName + "  Coming ");
         alertDialogBuilder.setNeutralButton("Later", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 stopRing();
                 notification();
+                finish();
             }
         });
 
@@ -237,9 +231,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 .setAutoCancel(true).setOngoing(true);
         Intent intent = new Intent(this, Home.class);
         intent.putExtra("reopen", "reopen");
-        intent.putExtra("tripKey",notificationIntent.getExtras().getString("tripKey"));
-        intent.putExtra("tripName",notificationIntent.getExtras().getString("tripName"));
-        intent.putExtra("from",notificationIntent.getExtras().getString("from"));
+        intent.putExtra("tripKey", notificationIntent.getExtras().getString("tripKey"));
+        intent.putExtra("tripName", notificationIntent.getExtras().getString("tripName"));
+        intent.putExtra("from", notificationIntent.getExtras().getString("from"));
         intent.putExtra("to", notificationIntent.getExtras().getString("to"));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
@@ -258,12 +252,12 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     public void show_Notification() {
         Intent intent = new Intent(getApplicationContext(), Home.class);
         intent.putExtra("reopen", "reopen");
-        intent.putExtra("tripKey",notificationIntent.getExtras().getString("tripKey"));
-        intent.putExtra("tripName",notificationIntent.getExtras().getString("tripName"));
-        intent.putExtra("from",notificationIntent.getExtras().getString("from"));
+        intent.putExtra("tripKey", notificationIntent.getExtras().getString("tripKey"));
+        intent.putExtra("tripName", notificationIntent.getExtras().getString("tripName"));
+        intent.putExtra("from", notificationIntent.getExtras().getString("from"));
         intent.putExtra("to", notificationIntent.getExtras().getString("to"));
         String CHANNEL_ID = "MYCHANNEL";
-        NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, "name", NotificationManager.IMPORTANCE_LOW);
+        NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, "name", NotificationManager.IMPORTANCE_HIGH);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         notification = new Notification.Builder(getApplicationContext(), CHANNEL_ID)
                 .setContentText(" Return to Your Trip Again :) ")
