@@ -220,6 +220,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
         editIntent.putExtra("direction",trips.get(_position).getDirection());
         editIntent.putExtra("repeat",trips.get(_position).getRepeating());
         editIntent.putExtra("key",trips.get(_position).getKey());
+        editIntent.putExtra("alarmKey",trips.get(_position).getAlarmKey());
         _context.startActivity(editIntent);
     }
 
@@ -254,12 +255,14 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
 
     private void cancelAlarm()
     {
-        Intent brodcastIntent = new Intent(_context, AlarmBroadCast.class);
-        brodcastIntent.putExtra("tripName",trips.get(_position).getTripName());
-        brodcastIntent.putExtra("key",trips.get(_position).getKey());
-        brodcastIntent.putExtra("from",trips.get(_position).getStartPoint());
-        brodcastIntent.putExtra("to",trips.get(_position).getEndPoint());
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(_context, trips.get(_position).getAlarmKey(), brodcastIntent, 0);
+        System.out.println("alarm Canceled");
+        System.out.println("alarm key "+trips.get(_position).getAlarmKey());
+        Intent broadcastIntent = new Intent(_context, AlarmBroadCast.class);
+        broadcastIntent.putExtra("tripName",trips.get(_position).getTripName());
+        broadcastIntent.putExtra("key",trips.get(_position).getKey());
+        broadcastIntent.putExtra("from",trips.get(_position).getStartPoint());
+        broadcastIntent.putExtra("to",trips.get(_position).getEndPoint());
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(_context, trips.get(_position).getAlarmKey(), broadcastIntent, 0);
         AlarmManager alarmMgr = (AlarmManager)_context.getSystemService(Context.ALARM_SERVICE);
         alarmMgr.cancel(pendingIntent);
     }

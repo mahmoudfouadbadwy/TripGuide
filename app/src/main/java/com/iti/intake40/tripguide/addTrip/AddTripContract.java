@@ -14,7 +14,7 @@ public interface AddTripContract {
     }
      interface AddTripPresenter{
         void addTrip(String tripName,String startPoint,String endPoint,String timerText,String date,String status,String direction ,String repeat);
-        void editTrip(String tripName,String startPoint,String endPoint,String timerText,String date,String status,String direction ,String repeat,String key);
+        void editTrip(String tripName,String startPoint,String endPoint,String timerText,String date,String status,String direction ,String repeat,String key,Boolean change);
         void stop();
         void onSuccess();
         void setAlarm(Trip trip,String key);
