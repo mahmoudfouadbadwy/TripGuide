@@ -9,7 +9,7 @@ import java.util.Random;
 public class AddTripPresenter implements AddTripContract.AddTripPresenter {
     private AddTripContract.AddTripView addTripView;
     private RealTime realTime;
-
+    Trip trip;
     public AddTripPresenter(AddTripContract.AddTripView addTripView) {
         this.addTripView = addTripView;
         realTime = new RealTime(this);
@@ -17,15 +17,17 @@ public class AddTripPresenter implements AddTripContract.AddTripPresenter {
 
     @Override
     public void addTrip(String tripName, String startPoint, String endPoint, String timerText, String date, String status, String direction, String repeat) {
-        Trip trip = new Trip(tripName, startPoint, endPoint, date, timerText, status, direction, repeat);
-        trip.setAlarmKey(new Random().nextInt(1000));
+        trip = new Trip(tripName, startPoint, endPoint, date, timerText, status, direction, repeat);
+        trip.setAlarmKey(new Random().nextInt(10000));
         realTime.addTrip(trip);
     }
 
     @Override
-    public void editTrip(String tripName, String startPoint, String endPoint, String timerText, String date, String status, String direction, String repeat,String key) {
-        realTime.editTrip(new Trip(tripName, startPoint, endPoint, date, timerText, status, direction, repeat),key );
-        onSuccess();
+    public void editTrip(String tripName, String startPoint, String endPoint, String timerText, String date, String status, String direction, String repeat,String key,Boolean change) {
+        trip =new Trip(tripName, startPoint, endPoint, date, timerText, status, direction, repeat);
+        trip.setAlarmKey(new Random().nextInt(10000));
+        realTime.editTrip(trip,key,change);
+
     }
 
     @Override

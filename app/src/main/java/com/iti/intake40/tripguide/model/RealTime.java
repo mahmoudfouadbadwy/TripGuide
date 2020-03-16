@@ -88,7 +88,7 @@ public class RealTime {
         _AddTripPresenter.setAlarm(trip, key);
     }
 
-    public void editTrip(Trip trip, String key) {
+    public void editTrip(Trip trip, String key ,Boolean change) {
         user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase.child(user.getUid()).child(key).child("day").setValue(trip.getDay());
         mDatabase.child(user.getUid()).child(key).child("direction").setValue(trip.getDirection());
@@ -97,7 +97,13 @@ public class RealTime {
         mDatabase.child(user.getUid()).child(key).child("repeating").setValue(trip.getRepeating());
         mDatabase.child(user.getUid()).child(key).child("time").setValue(trip.getTime());
         mDatabase.child(user.getUid()).child(key).child("tripName").setValue(trip.getTripName());
+        mDatabase.child(user.getUid()).child(key).child("alarmKey").setValue(trip.getAlarmKey());
         mDatabase.keepSynced(true);
+        trip.setKey(key);
+        // edit alarm
+         if(change) {
+            _AddTripPresenter.setAlarm(trip, key);
+        }
     }
 
     public void makeDone(String key) {
