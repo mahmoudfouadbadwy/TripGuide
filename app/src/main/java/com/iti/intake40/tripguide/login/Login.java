@@ -3,7 +3,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +31,9 @@ import com.iti.intake40.tripguide.R;
 import com.iti.intake40.tripguide.home.Home;
 import com.iti.intake40.tripguide.registration.SignUpActivity;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class Login extends AppCompatActivity implements LoginContract.LoginView {
     private Intent signUpIntent;
     private Button loginBtn;
@@ -43,6 +51,25 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setupViews();
+        //////////////////////////////////
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    getPackageName(),
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest messageDigest = MessageDigest.getInstance("SHA");
+                messageDigest.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(messageDigest.digest(), Base64.DEFAULT));
+            }
+        }
+        catch (PackageManager.NameNotFoundException e) {
+           // c3WypRk4jZ785IRJ3rTrAldGklw=
+        }
+        catch (NoSuchAlgorithmException e) {
+
+        }
+
+        //////////////////////////////////
         floginButton=findViewById(R.id.login_button);
         presenter = new LoginPresenter(this);
         loginBtn.setOnClickListener(new View.OnClickListener() {
