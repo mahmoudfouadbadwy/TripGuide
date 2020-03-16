@@ -62,5 +62,8 @@
     <string name="history_note">Show Notes</string>
     <string name="history_delete">Delete</string>
     <string name="logoText">Trip Guide</string>
+    <string name="facebook_app_id">235731750932306</string>
+    <string name="fb_login_protocol_scheme">fb235731750932306</string>
+
 
 </resources>
