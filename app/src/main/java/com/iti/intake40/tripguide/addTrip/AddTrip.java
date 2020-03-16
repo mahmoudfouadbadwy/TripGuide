@@ -54,7 +54,7 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
     private String repeating_text = "No Repeat";
     private String direction_text = "one Way";
     private PendingIntent pendingIntent;
-    private Intent brodcastIntent;
+    private Intent broadcastIntent;
     private AlarmManager alarmMgr;
     private android.icu.util.Calendar calendar;
     // map auto complete
@@ -72,51 +72,40 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trip);
         setupViews();
-        editTripData();
-        getLocations(R.id.frag, startPoint);
-        getLocations(R.id.frag2, endPoint);
-        addTripPresenter = new AddTripPresenter(AddTrip.this);
+        // load trip data on edit mode
+        if (getIntent().hasExtra("tripName")) {
+            getTripData();
+        }
+        // calender action
         calender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDataPickerDialog();
             }
         });
+        // timer action
         timer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showTimePickerDialog();
             }
         });
+        // save button action
         addTripButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 if (checkValidation()) {
+                    addTripPresenter = new AddTripPresenter(AddTrip.this);
                     // edit
                     if (editData.hasExtra("key")) {
-                        if (changeFlag)
+                        if (changeFlag) {
                             cancelAlarm();
-                        addTripPresenter.editTrip(tripName.getText().toString().trim(),
-                                startPoint.getText().toString().trim(),
-                                endPoint.getText().toString().trim(),
-                                timerText.getText().toString().trim(),
-                                calenderText.getText().toString().trim(),
-                                "upComing",
-                                direction_text,
-                                repeating_text,
-                                editData.getExtras().getString("key"), changeFlag);
-
+                        }
+                        editTrip();
                         // add
                     } else {
-                        addTripPresenter.addTrip(tripName.getText().toString().trim(),
-                                startPoint.getText().toString().trim(),
-                                endPoint.getText().toString().trim(),
-                                timerText.getText().toString().trim(),
-                                calenderText.getText().toString().trim(),
-                                "upComing",
-                                direction_text,
-                                repeating_text);
+                        addTrip();
                     }
 
                 } else {
@@ -212,7 +201,8 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
     }
 
     // SetupViews
-    private void setupViews() {
+    @Override
+    public void setupViews() {
         tripName = findViewById(R.id.tripName);
         startPoint = findViewById(R.id.startPoint);
         endPoint = findViewById(R.id.endPoint);
@@ -238,10 +228,13 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
             Places.initialize(getApplicationContext(), apiKey);
         }
         placesClient = Places.createClient(this);
+        getLocations(R.id.frag, startPoint);
+        getLocations(R.id.frag2, endPoint);
     }
 
     // select points
-    private void getLocations(int fragment, final TextView result) {
+    @Override
+    public void getLocations(int fragment, final TextView result) {
         final AutocompleteSupportFragment autocompleteSupportFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(fragment);
         autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.LAT_LNG, Place.Field.NAME));
         // for edit
@@ -279,7 +272,7 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void setAlarm(Trip trip, String key) {
         System.out.println("Alarm Fire");
-        System.out.println("Alarm Key :"+ trip.getAlarmKey());
+        System.out.println("Alarm Key :" + trip.getAlarmKey());
         calendar = android.icu.util.Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         if (selectedDate == null) {
@@ -301,12 +294,12 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
             calendar.set(Calendar.MINUTE, selectedTime.getMinute());
         }
         calendar.set(Calendar.SECOND, 0);
-        brodcastIntent = new Intent(AddTrip.this, AlarmBroadCast.class);
-        brodcastIntent.putExtra("tripName", trip.getTripName());
-        brodcastIntent.putExtra("key", key);
-        brodcastIntent.putExtra("from", trip.getStartPoint());
-        brodcastIntent.putExtra("to", trip.getEndPoint());
-        pendingIntent = PendingIntent.getBroadcast(AddTrip.this, trip.getAlarmKey(), brodcastIntent, 0);
+        broadcastIntent = new Intent(AddTrip.this, AlarmBroadCast.class);
+        broadcastIntent.putExtra("tripName", trip.getTripName());
+        broadcastIntent.putExtra("key", key);
+        broadcastIntent.putExtra("from", trip.getStartPoint());
+        broadcastIntent.putExtra("to", trip.getEndPoint());
+        pendingIntent = PendingIntent.getBroadcast(AddTrip.this, trip.getAlarmKey(), broadcastIntent, 0);
         alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
@@ -318,40 +311,41 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
     }
 
     // load trip on edit mode
-    private void editTripData() {
+    @Override
+    public void getTripData() {
         int repeat = 0;
         int direction_index = 0;
         editData = getIntent();
-        if (editData.hasExtra("tripName")) {
-            tripName.setText(editData.getExtras().getString("tripName"));
-            startPoint.setText(editData.getExtras().getString("from"));
-            endPoint.setText(editData.getExtras().getString("to"));
-            calenderText.setText(editData.getExtras().getString("tripDate"));
-            timerText.setText(editData.getExtras().getString("tripTime"));
-            // repeating
-            if (editData.getExtras().getString("repeat").equalsIgnoreCase("No Repeat")) {
-                repeat = 0;
-            } else if (editData.getExtras().getString("repeat").equalsIgnoreCase("Daily")) {
-                repeat = 1;
-            } else if (editData.getExtras().getString("repeat").equalsIgnoreCase("Weakly")) {
-                repeat = 2;
-            } else if (editData.getExtras().getString("repeat").equalsIgnoreCase("Monthly")) {
-                repeat = 3;
-            }
-            repeating.setSelection(repeat, true);
-
-            // direction
-            if (editData.getExtras().getString("direction").equalsIgnoreCase("One Way")) {
-                direction_index = 0;
-            } else if (editData.getExtras().getString("direction").equalsIgnoreCase("Round Trip")) {
-                direction_index = 1;
-            }
-            direction.setSelection(direction_index, true);
+        tripName.setText(editData.getExtras().getString("tripName"));
+        startPoint.setText(editData.getExtras().getString("from"));
+        endPoint.setText(editData.getExtras().getString("to"));
+        calenderText.setText(editData.getExtras().getString("tripDate"));
+        timerText.setText(editData.getExtras().getString("tripTime"));
+        // repeating
+        if (editData.getExtras().getString("repeat").equalsIgnoreCase("No Repeat")) {
+            repeat = 0;
+        } else if (editData.getExtras().getString("repeat").equalsIgnoreCase("Daily")) {
+            repeat = 1;
+        } else if (editData.getExtras().getString("repeat").equalsIgnoreCase("Weakly")) {
+            repeat = 2;
+        } else if (editData.getExtras().getString("repeat").equalsIgnoreCase("Monthly")) {
+            repeat = 3;
         }
+        repeating.setSelection(repeat, true);
+
+        // direction
+        if (editData.getExtras().getString("direction").equalsIgnoreCase("One Way")) {
+            direction_index = 0;
+        } else if (editData.getExtras().getString("direction").equalsIgnoreCase("Round Trip")) {
+            direction_index = 1;
+        }
+        direction.setSelection(direction_index, true);
+
     }
 
     // cancel alarm for edit .
-    private void cancelAlarm() {
+    @Override
+    public void cancelAlarm() {
         System.out.println("Alarm canceled from editing");
         Intent broadcastIntent = new Intent(AddTrip.this, AlarmBroadCast.class);
         broadcastIntent.putExtra("tripName", editData.getExtras().getString("tripName"));
@@ -362,8 +356,32 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
         AlarmManager alarmMgr = (AlarmManager) AddTrip.this.getSystemService(Context.ALARM_SERVICE);
         alarmMgr.cancel(pendingIntent);
     }
-
-    private String[] splitString(String txt, String operation) {
+    @Override
+    public String[] splitString(String txt, String operation) {
         return txt.split(operation);
+    }
+    @Override
+    public void editTrip() {
+        addTripPresenter.editTrip(tripName.getText().toString().trim(),
+                startPoint.getText().toString().trim(),
+                endPoint.getText().toString().trim(),
+                timerText.getText().toString().trim(),
+                calenderText.getText().toString().trim(),
+                "upComing",
+                direction_text,
+                repeating_text,
+                editData.getExtras().getString("key"), changeFlag);
+
+    }
+    @Override
+    public void addTrip() {
+        addTripPresenter.addTrip(tripName.getText().toString().trim(),
+                startPoint.getText().toString().trim(),
+                endPoint.getText().toString().trim(),
+                timerText.getText().toString().trim(),
+                calenderText.getText().toString().trim(),
+                "upComing",
+                direction_text,
+                repeating_text);
     }
 }
