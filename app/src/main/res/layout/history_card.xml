@@ -18,8 +18,8 @@
 
         <TextView
             android:id="@+id/trip_title"
-            android:layout_width="185dp"
-            android:layout_height="30dp"
+            android:layout_width="226dp"
+            android:layout_height="37dp"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
@@ -27,22 +27,24 @@
             android:drawableLeft="@drawable/tripname3"
             android:gravity="center"
             android:textColor="#ffff"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/trip_status"
-            android:layout_width="150dp"
-            android:layout_height="30dp"
+            android:layout_width="132dp"
+            android:layout_height="40dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
+            android:background="@drawable/border3"
+            android:gravity="center"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.934"
             app:layout_constraintStart_toEndOf="@+id/trip_title"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/border3"
-            android:gravity="center"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/preview"
@@ -77,6 +79,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
+                android:textSize="16sp"
                 android:visibility="visible"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -88,6 +91,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
+                android:textSize="16sp"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.934"
@@ -103,6 +107,9 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
+                android:drawableLeft="@drawable/startpoint"
+                android:gravity="center_vertical"
+                android:textSize="16sp"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -117,6 +124,9 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
+                android:drawableLeft="@drawable/endpoint"
+                android:gravity="center_vertical"
+                android:textSize="16sp"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

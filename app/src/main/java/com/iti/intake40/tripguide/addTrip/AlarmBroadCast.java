@@ -6,9 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import androidx.annotation.RequiresApi;
-
 import com.iti.intake40.tripguide.alarm.Alarm;
-import com.iti.intake40.tripguide.home.Home;
+
 
 public class AlarmBroadCast extends BroadcastReceiver {
     Intent i;
