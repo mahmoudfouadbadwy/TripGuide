@@ -222,7 +222,7 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
         arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         direction.setAdapter(arrayAdapter);
         direction.setOnItemSelectedListener(this);
-
+        editData = getIntent();
         // map auto complete
         if (!Places.isInitialized()) {
             Places.initialize(getApplicationContext(), apiKey);
