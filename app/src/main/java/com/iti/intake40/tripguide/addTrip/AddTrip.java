@@ -299,6 +299,7 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
         broadcastIntent.putExtra("key", key);
         broadcastIntent.putExtra("from", trip.getStartPoint());
         broadcastIntent.putExtra("to", trip.getEndPoint());
+        broadcastIntent.putExtra("alarmKey", trip.getAlarmKey());
         pendingIntent = PendingIntent.getBroadcast(AddTrip.this, trip.getAlarmKey(), broadcastIntent, 0);
         alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);

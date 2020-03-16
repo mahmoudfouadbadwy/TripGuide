@@ -21,6 +21,8 @@ public class AlarmBroadCast extends BroadcastReceiver {
         i.putExtra("tripName",intent.getExtras().getString("tripName"));
         i.putExtra("from",intent.getExtras().getString("from"));
         i.putExtra("to",intent.getExtras().getString("to"));
+        i.putExtra("alarmKey",intent.getExtras().getInt("alarmKey"));
+
         context.startActivity(i);
 
     }

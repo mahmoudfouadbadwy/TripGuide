@@ -32,10 +32,10 @@ public class Alarm extends AppCompatActivity {
     AlertDialog alertDialog;
     Intent AlarmIntent;
     boolean flag;
-    private final String CHANNEL_ID = "personal_notification";
-    private final int NOTIFICATION_ID = 001;
     Notification notification;
     NotificationManager notificationManager;
+
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,16 +143,17 @@ public class Alarm extends AppCompatActivity {
 
     // version less than 8 .
     public void showOldNotification() {
+        int NOTIFICATION_ID = AlarmIntent.getExtras().getInt("alarmKey");
+        String CHANNEL_ID = AlarmIntent.getExtras().getString("tripKey");
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.clock)
                 .setContentTitle("Trip Guide")
                 .setVibrate(new long[]{10000, 10000})
-                .setContentText(" Return to Your Trip Again :) ")
+                .setContentText(" Return to "+AlarmIntent.getExtras().getString("tripName")+" Again :) ")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 // Set the intent that will fire when the user taps the notification
                 .setAutoCancel(true).setOngoing(true);
         Intent intent = new Intent(this, Alarm.class);
-        intent.putExtra("reopen", "reopen");
         intent.putExtra("tripKey", AlarmIntent.getExtras().getString("tripKey"));
         intent.putExtra("tripName", AlarmIntent.getExtras().getString("tripName"));
         intent.putExtra("from", AlarmIntent.getExtras().getString("from"));
@@ -172,17 +173,17 @@ public class Alarm extends AppCompatActivity {
     @TargetApi(Build.VERSION_CODES.O)
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void show_Notification() {
+        int NOTIFICATION_ID = AlarmIntent.getExtras().getInt("alarmKey");
         Intent intent = new Intent(getApplicationContext(), Alarm.class);
-        intent.putExtra("reopen", "reopen");
         intent.putExtra("tripKey", AlarmIntent.getExtras().getString("tripKey"));
         intent.putExtra("tripName", AlarmIntent.getExtras().getString("tripName"));
         intent.putExtra("from", AlarmIntent.getExtras().getString("from"));
         intent.putExtra("to", AlarmIntent.getExtras().getString("to"));
-        String CHANNEL_ID = "MYCHANNEL";
-        NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, "name", NotificationManager.IMPORTANCE_HIGH);
+        String CHANNEL_ID =  AlarmIntent.getExtras().getString("tripKey");
+        NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, "notification", NotificationManager.IMPORTANCE_HIGH);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         notification = new android.app.Notification.Builder(getApplicationContext(), CHANNEL_ID)
-                .setContentText(" Return to Your Trip Again :) ")
+                .setContentText(" Return to "+AlarmIntent.getExtras().getString("tripName")+" Again :) ")
                 .setContentTitle("Trip Guide")
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
@@ -209,7 +210,6 @@ public class Alarm extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Toast.makeText(this,"rg",Toast.LENGTH_LONG).show();
         finish();
     }
 }
