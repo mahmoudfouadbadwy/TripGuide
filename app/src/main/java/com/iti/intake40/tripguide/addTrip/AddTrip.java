@@ -251,7 +251,6 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
         autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
-                Toast.makeText(AddTrip.this,""+ place.getLatLng().latitude,Toast.LENGTH_LONG).show();
                 result.setText(place.getName());
             }
 
