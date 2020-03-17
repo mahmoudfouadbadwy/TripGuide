@@ -64,9 +64,10 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
         }
         catch (PackageManager.NameNotFoundException e) {
            // c3WypRk4jZ785IRJ3rTrAldGklw=
+            e.printStackTrace();
         }
         catch (NoSuchAlgorithmException e) {
-
+            e.printStackTrace();
         }
 
         //////////////////////////////////
@@ -98,6 +99,7 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
 
             @Override
             public void onError(FacebookException error) {
+                error.printStackTrace();
             }
         });
     }

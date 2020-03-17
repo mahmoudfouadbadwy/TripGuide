@@ -72,7 +72,7 @@ public class FloatingViewService extends Service {
         acik_widget = mFloatingView.findViewById(R.id.layoutExpanded);
         recyclerView = acik_widget.findViewById(R.id.recycle);
         list = new ArrayList<>();
-        new RealTime(ShowMap.tripKey, this).getNotes();
+        new RealTime(ShowMap.tripKey, this).getNotes(ShowMap.tripKey);
         adapter = new RecycleAdapter(list, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

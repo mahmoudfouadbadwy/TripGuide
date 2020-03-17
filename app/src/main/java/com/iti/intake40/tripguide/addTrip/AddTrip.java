@@ -76,6 +76,7 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
         if (getIntent().hasExtra("tripName")) {
             getTripData();
         }
+        addTripPresenter = new AddTripPresenter(AddTrip.this);
         // calender action
         calender.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +97,7 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
             @Override
             public void onClick(View v) {
                 if (checkValidation()) {
-                    addTripPresenter = new AddTripPresenter(AddTrip.this);
+
                     // edit
                     if (editData.hasExtra("key")) {
                         if (changeFlag) {

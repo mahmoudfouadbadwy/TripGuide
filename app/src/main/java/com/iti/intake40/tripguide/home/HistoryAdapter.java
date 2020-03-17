@@ -90,7 +90,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.getNote().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new RealTime(trips.get(position).getKey(), HistoryAdapter.this).getNotes();
+                new RealTime(trips.get(position).getKey(), HistoryAdapter.this).getNotes(trips.get(position).getKey());
             }
         });
 

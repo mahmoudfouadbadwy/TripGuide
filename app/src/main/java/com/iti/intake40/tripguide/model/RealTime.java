@@ -80,6 +80,7 @@ public class RealTime {
     }
 
     public void addTrip(Trip trip) {
+        mDatabase = FirebaseDatabase.getInstance().getReference("TripGuide");
         user = FirebaseAuth.getInstance().getCurrentUser();
         key = mDatabase.child(user.getUid()).push().getKey();
         mDatabase.child(user.getUid()).child(key).setValue(trip);
@@ -88,7 +89,8 @@ public class RealTime {
         _AddTripPresenter.setAlarm(trip, key);
     }
 
-    public void editTrip(Trip trip, String key ,Boolean change) {
+    public void editTrip(Trip trip, String key, Boolean change) {
+        mDatabase = FirebaseDatabase.getInstance().getReference("TripGuide");
         user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase.child(user.getUid()).child(key).child("day").setValue(trip.getDay());
         mDatabase.child(user.getUid()).child(key).child("direction").setValue(trip.getDirection());
@@ -101,30 +103,39 @@ public class RealTime {
         mDatabase.keepSynced(true);
         trip.setKey(key);
         // edit alarm
-         if(change) {
+        if (change) {
             _AddTripPresenter.setAlarm(trip, key);
         }
     }
 
     public void makeDone(String key) {
+        mDatabase = FirebaseDatabase.getInstance().getReference("TripGuide");
         user = FirebaseAuth.getInstance().getCurrentUser();
-        mDatabase.child(user.getUid()).child(key).child("status").setValue("Done");
+        mDatabase.child(user.getUid())
+                .child(key)
+                .child("status").setValue("Done");
         mDatabase.keepSynced(true);
+
     }
 
     public void cancelTrip(String key) {
+        mDatabase = FirebaseDatabase.getInstance().getReference("TripGuide");
         user = FirebaseAuth.getInstance().getCurrentUser();
-        mDatabase.child(user.getUid()).child(key).child("status").setValue("Cancel");
-        mDatabase.keepSynced(true);
+        if (user != null) {
+            mDatabase.child(user.getUid()).child(key).child("status").setValue("Cancel");
+            mDatabase.keepSynced(true);
+        }
     }
 
     public void deleteTrip(String key) {
+        mDatabase = FirebaseDatabase.getInstance().getReference("TripGuide");
         user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase.child(user.getUid()).child(key).removeValue();
         mDatabase.keepSynced(true);
     }
 
     public void addNote(String content, String key) {
+        mDatabase = FirebaseDatabase.getInstance().getReference("TripGuide");
         user = FirebaseAuth.getInstance().getCurrentUser();
         String noteKey;
         addNoteRef = mDatabase.child(user.getUid()).child(key);
@@ -133,7 +144,11 @@ public class RealTime {
         addNoteRef.keepSynced(true);
     }
 
-    public void getNotes() {
+    public void getNotes(String key) {
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        noteReference = FirebaseDatabase.getInstance().
+                getReference("TripGuide").
+                child(user.getUid()).child(key).child("Notes");
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -145,9 +160,8 @@ public class RealTime {
                 } else if (_HistoryAdapter != null) {
                     _HistoryAdapter.showNotes(noteList);
                 }
-                if(_floatingViewService !=null)
-                {
-                   _floatingViewService.showNotes(noteList);
+                if (_floatingViewService != null) {
+                    _floatingViewService.showNotes(noteList);
                 }
             }
 
@@ -155,7 +169,7 @@ public class RealTime {
             public void onCancelled(DatabaseError databaseError) {
             }
         };
-        noteReference.addValueEventListener(postListener);
+        noteReference.addListenerForSingleValueEvent(postListener);
     }
 
 

@@ -98,7 +98,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
             public void onClick(View v) {
                 _position = position;
                 model = new RealTime(trips.get(_position).getKey(), UpcomingAdapter.this);
-                model.getNotes();
+                model.getNotes(trips.get(_position).getKey());
             }
         });
 
@@ -133,6 +133,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 if (!note_content.getText().toString().trim().isEmpty()) {
+                    model = new RealTime();
                     model.addNote(note_content.getText().toString(),trips.get(_position).getKey());
                     noteDialog.dismiss();
                     Toast.makeText(_context, "Note Added Successfully", Toast.LENGTH_LONG).show();
@@ -226,15 +227,13 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        if (model == null) {
-            model = new RealTime();
-        }
 
         switch (item.getItemId()) {
             case R.id.addNotes:
                 showDialog();
                 break;
             case R.id.done_menu:
+                model = new RealTime();
                 model.makeDone(trips.get(_position).getKey());
                 cancelAlarm();
                 break;
@@ -242,12 +241,12 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
                    editTrip();
                 break;
             case R.id.cancel_menu:
+                model = new RealTime();
                 model.cancelTrip(trips.get(_position).getKey());
                 cancelAlarm();
                 break;
             case R.id.delete_menu:
                 showAlertDialog("Are You Sure You Want To Delete Trip ?");
-
                 break;
         }
         return false;
