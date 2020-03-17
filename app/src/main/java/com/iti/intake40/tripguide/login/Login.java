@@ -18,6 +18,7 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -84,6 +85,7 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
         });
 
         callbackManager = CallbackManager.Factory.create();
+        floginButton.setLoginBehavior(LoginBehavior.WEB_ONLY);
         floginButton.setReadPermissions("email", "public_profile");
 
         floginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
