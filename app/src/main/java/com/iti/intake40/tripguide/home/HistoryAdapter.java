@@ -2,6 +2,7 @@ package com.iti.intake40.tripguide.home;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.iti.intake40.tripguide.R;
 import com.iti.intake40.tripguide.model.RealTime;
 import com.iti.intake40.tripguide.model.Trip;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,6 +93,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
                 new RealTime(trips.get(position).getKey(), HistoryAdapter.this).getNotes();
             }
         });
+
+        // preview
+        String url = "https://maps.googleapis.com/maps/api/staticmap?size=500x250&markers=color:green|label:S|"
+               +trips.get(position).getStartPoint()+"&markers=color:red|label:E|"+ trips.get(position).getEndPoint()+ "&key=AIzaSyDIJ9XX2ZvRKCJcFRrl-lRanEtFUow4piM";
+        Glide.with(_context).load(url).into(holder.getPreview());
 
 
     }

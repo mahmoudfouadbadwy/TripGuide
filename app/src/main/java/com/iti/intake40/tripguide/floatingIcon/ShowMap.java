@@ -20,7 +20,7 @@ public class ShowMap extends AppCompatActivity {
         {
             askPermission();
         }
-        String s = getIntent().getStringExtra("startPoint");
+        //String s = getIntent().getStringExtra("startPoint");
         String e = getIntent().getStringExtra("endpoint");
         tripKey = getIntent().getExtras().getString("key");
 //        Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+s+" &daddr= +"+e));
