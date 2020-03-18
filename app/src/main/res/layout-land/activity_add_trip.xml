@@ -47,9 +47,10 @@
 
                 <TextView
                     android:id="@+id/timeText"
-                    android:layout_width="100dp"
+                    android:layout_width="match_parent"
                     android:layout_height="5dp"
                     android:layout_gravity="center"
+                    android:layout_marginRight="1dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape"
                     android:gravity="center_horizontal"
@@ -73,9 +74,10 @@
 
                 <TextView
                     android:id="@+id/calenderText"
-                    android:layout_width="100dp"
+                    android:layout_width="match_parent"
                     android:layout_height="5dp"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="1dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape"
                     android:gravity="center_horizontal"
@@ -199,7 +201,6 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_weight="12"
-                    android:drawableLeft="@drawable/startpoint"
                     android:ems="10"
                     android:hint="@string/StartPoint"
                     android:inputType="textPersonName" />

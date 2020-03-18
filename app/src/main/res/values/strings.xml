@@ -64,6 +64,7 @@
     <string name="logoText">Trip Guide</string>
     <string name="facebook_app_id">235731750932306</string>
     <string name="fb_login_protocol_scheme">fb235731750932306</string>
-
+    <string name="mapHistory">Map History</string>
+    <string name="close_map">Close</string>
 
 </resources>

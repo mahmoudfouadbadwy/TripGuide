@@ -2,7 +2,6 @@ package com.iti.intake40.tripguide.home;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +22,10 @@ import com.iti.intake40.tripguide.R;
 import com.iti.intake40.tripguide.model.RealTime;
 import com.iti.intake40.tripguide.model.Trip;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.List;
+
 
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
@@ -39,11 +37,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     AlertDialog.Builder builderNote;
     AlertDialog alertDialog_note;
     private int _position;
-
+    private String google_map_url="https://maps.googleapis.com/maps/api/staticmap?size=500x500";
+    private String google_map_key="AIzaSyDIJ9XX2ZvRKCJcFRrl-lRanEtFUow4piM";
     HistoryAdapter(Context _context, List<Trip> trips) {
         this._context = _context;
         this.trips = trips;
     }
+
+
 
     @NonNull
     @Override
@@ -95,9 +96,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         });
 
         // preview
-        String url = "https://maps.googleapis.com/maps/api/staticmap?size=500x250&markers=color:green|label:S|"
-               +trips.get(position).getStartPoint()+"&markers=color:red|label:E|"+ trips.get(position).getEndPoint()+ "&key=AIzaSyDIJ9XX2ZvRKCJcFRrl-lRanEtFUow4piM";
+        String url = "https://maps.googleapis.com/maps/api/staticmap?size=500x300&markers=color:green|label:S|"
+               +trips.get(position).getStartPoint()+"&markers=color:red|label:E|"+ trips.get(position).getEndPoint()+"&path=color:blue|weight:5|"+trips.get(position).getStartPoint()+"|"+trips.get(position).getEndPoint()+ "&key="+google_map_key;
         Glide.with(_context).load(url).into(holder.getPreview());
+
 
 
     }
@@ -235,4 +237,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             view = itemView;
         }
     }
+
+
+
+
+
 }

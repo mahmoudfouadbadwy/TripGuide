@@ -1,11 +1,17 @@
 package com.iti.intake40.tripguide.home;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,6 +30,8 @@ import com.iti.intake40.tripguide.R;
 import com.iti.intake40.tripguide.model.Trip;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class HistoryFragment extends Fragment {
     private Context _context;
@@ -34,6 +43,8 @@ public class HistoryFragment extends Fragment {
     private Trip trip;
     private ValueEventListener tripListener;
     private LinearLayout noTrips;
+    private String google_map_url="https://maps.googleapis.com/maps/api/staticmap?size=500x700";
+    private String google_map_key="AIzaSyDIJ9XX2ZvRKCJcFRrl-lRanEtFUow4piM";
 
     @Nullable
     @Override
@@ -113,5 +124,75 @@ public class HistoryFragment extends Fragment {
             noTrips.setVisibility(View.VISIBLE);
         }
     }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.history_menu,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.history_map:
+                showMapDialog();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    private String getGoogleMapTrips(List<Trip> trips)
+    {
+        StringBuilder url = new StringBuilder(google_map_url);
+        for (int i=0;i<trips.size();i++)
+        {
+            String color = Integer.toHexString(new Random().nextInt(16777215));
+            url.append("&markers=color:green")
+                    .append("|label:S|")
+                    .append(trips.get(i).getStartPoint())
+                    .append("&markers=color:red")
+                    .append("|label:E|")
+                    .append(trips.get(i).getEndPoint())
+                    .append("&path=color:0x")
+                    .append(color)
+                    .append("|weight:5|")
+                    .append(trips.get(i).getStartPoint())
+                    .append("|")
+                    .append(trips.get(i).getEndPoint());
+        }
+        url.append("&key=").append(google_map_key);
+        return url.toString();
+    }
+
+    private void showMapDialog()
+    {
+       // if(_context != null) {
+            final Dialog dialog = new Dialog(getActivity());
+            ViewGroup viewGroup_Dialog = view.findViewById(R.id.drawer_layout);
+            LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View v = inflater.inflate(R.layout.map_dialog, viewGroup_Dialog, false);
+            ImageView mapImage = v.findViewById(R.id.map_image_dialog);
+            Glide.with(getActivity()).load(getGoogleMapTrips(trips)).into(mapImage);
+            v.findViewById(R.id.close_map_dialog).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.setContentView(v);
+            dialog.setFeatureDrawableResource(0,R.drawable.map);
+            dialog.setTitle("Map");
+            dialog.setCanceledOnTouchOutside(true);
+            dialog.show();
+        //}
+    }
+
+
 
 }
