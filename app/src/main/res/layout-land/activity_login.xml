@@ -24,8 +24,8 @@
             android:id="@+id/logo1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:layout_weight="30"
+            android:fontFamily="@font/felipa"
+            android:layout_weight="40"
             android:gravity="center|bottom"
             android:text="@string/logo1"
             android:textColor="@android:color/white"
@@ -37,12 +37,12 @@
             android:id="@+id/logo2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:fontFamily="@font/felipa"
             android:layout_weight="3"
             android:gravity="center"
             android:text="@string/logo2"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
+            android:textSize="22sp"
             android:textStyle="italic" />
 
         <TextView
@@ -50,13 +50,13 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:fontFamily="@font/felipa"
             android:layout_weight="3"
             android:gravity="center"
             android:text="@string/logo3"
             android:textColor="@android:color/white"
-            android:textSize="24sp"
-            android:textStyle="italic" />
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
 
 
