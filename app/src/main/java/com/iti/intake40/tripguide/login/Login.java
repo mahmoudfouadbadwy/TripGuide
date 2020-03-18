@@ -1,4 +1,5 @@
 package com.iti.intake40.tripguide.login;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -47,8 +48,9 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
     ///////face
     private LoginButton floginButton;
     private CallbackManager callbackManager;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setupViews();
@@ -62,26 +64,23 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
                 messageDigest.update(signature.toByteArray());
                 Log.d("KeyHash:", Base64.encodeToString(messageDigest.digest(), Base64.DEFAULT));
             }
-        }
-        catch (PackageManager.NameNotFoundException e) {
-           // c3WypRk4jZ785IRJ3rTrAldGklw=
+        } catch (PackageManager.NameNotFoundException e) {
+            // c3WypRk4jZ785IRJ3rTrAldGklw=
             e.printStackTrace();
-        }
-        catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
 
         //////////////////////////////////
-        floginButton=findViewById(R.id.login_button);
+        floginButton = findViewById(R.id.login_button);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               if (checkValidation())
-               {
-                   presenter = new LoginPresenter(Login.this);
-                   presenter.loginWithEmail(email.getText().toString(),password.getText().toString());
-               }
+                if (checkValidation()) {
+                    presenter = new LoginPresenter(Login.this);
+                    presenter.loginWithEmail(email.getText().toString(), password.getText().toString());
+                }
             }
         });
 
@@ -119,7 +118,7 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
                             goToHome();
                             //c3WypRk4jZ785IRJ3rTrAldGklw=
                         } else {
-                            Toast.makeText(Login.this, "Login failed",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this, "Login failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -134,65 +133,58 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
 
     @Override
     public boolean validateEmail(String email) {
-        boolean check  ;
+        boolean check;
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-        if (email.matches(emailPattern) && email.isEmpty()==false)
-        {
-            this.email.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.email,0);
+        if (email.matches(emailPattern) && email.isEmpty() == false) {
+            this.email.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.email, 0);
             check = true;
-        }
-        else {
-            this.email.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.error,0);
-            check  = false;
+        } else {
+            this.email.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.error, 0);
+            check = false;
         }
         return check;
     }
 
     @Override
     public boolean validatePassword(String password) {
-        boolean check ;
+        boolean check;
 
-        if(password.length() >= 6){
-            this.password.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.password,0);
-            check = true ;
-        }
-        else {
-            this.password.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.error,0);
-            Toast.makeText(Login.this,"Invalid PassWord",Toast.LENGTH_LONG).show();
-            check  = false;
+        if (password.length() >= 6) {
+            this.password.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.password, 0);
+            check = true;
+        } else {
+            this.password.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.error, 0);
+            Toast.makeText(Login.this, "Invalid PassWord", Toast.LENGTH_LONG).show();
+            check = false;
         }
         return check;
     }
 
-    private boolean checkValidation()
-    {
-        boolean check =false;
-        if ( validateEmail(email.getText().toString()) & validatePassword(password.getText().toString()))
-        {
+    private boolean checkValidation() {
+        boolean check = false;
+        if (validateEmail(email.getText().toString()) & validatePassword(password.getText().toString())) {
             check = true;
         }
-      return  check;
+        return check;
     }
+
     @Override
-    public void goToHome()
-    {
+    public void goToHome() {
         homeIntent = new Intent(this, Home.class);
-        homeIntent.putExtra("Email",mAuth.getCurrentUser().getEmail());
+        homeIntent.putExtra("Email", mAuth.getCurrentUser().getEmail());
         startActivity(homeIntent);
         finish();
     }
 
     @Override
     public void displayError(String message) {
-        Toast.makeText(Login.this,message,Toast.LENGTH_LONG).show();
+        Toast.makeText(Login.this, message, Toast.LENGTH_LONG).show();
     }
 
-    private void setupViews()
-    {
+    private void setupViews() {
         loginBtn = findViewById(R.id.loginButton);
         email = findViewById(R.id.emailText);
         password = findViewById(R.id.passwordText);
-       // googleBtn = findViewById(R.id.signGoogle);
         mAuth = FirebaseAuth.getInstance();
 
     }
@@ -206,15 +198,15 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
     @Override
     protected void onStart() {
         super.onStart();
-       if( mAuth.getCurrentUser() != null)
-       {
-           goToHome();
-       }
+        if (mAuth.getCurrentUser() != null) {
+            goToHome();
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        presenter.stop();
+        if (presenter != null)
+            presenter.stop();
     }
 }
