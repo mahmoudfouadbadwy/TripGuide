@@ -10,6 +10,7 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.icu.text.TimeZoneFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -33,8 +34,11 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 import com.iti.intake40.tripguide.R;
 import com.iti.intake40.tripguide.model.Trip;
 
+import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class AddTrip extends AppCompatActivity implements AddTripContract.AddTripView, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, AdapterView.OnItemSelectedListener {
@@ -66,6 +70,18 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
     private DatePicker selectedDate;
     // flag for time or date change
     private boolean changeFlag = false;
+
+
+    //
+    int hour ;
+    int minute ;
+
+    int day ;
+    int month ;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +151,8 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
         int newMonth = month + 1;
         calenderText.setText(dayOfMonth + "-" + newMonth + "-" + year);
         changeFlag = true;
+        this.day = dayOfMonth;
+        this.month = month;
     }
 
     // show time picker
@@ -157,6 +175,39 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
         selectedTime = view;
         timerText.setText(hourOfDay + ":" + minute);
         changeFlag = true;
+        this.hour = hourOfDay;
+        this.minute = minute;
+
+    }
+
+    public boolean compareToNotify(){
+
+        Calendar c = Calendar.getInstance();
+        Date d = c.getTime();
+        boolean check = false;
+
+        if(d.getDate()== day)
+        {
+            if(d.getHours() <= hour)
+            {
+                if(d.getMinutes() <= minute)
+                {
+                    check = true;
+                }
+                else {
+                    check = false;
+                }
+
+            } else {
+                check = false;
+            }
+
+        } else if(d.getDate()< day) {
+                check = true;
+        }
+
+
+    return check;
     }
 
     @Override
@@ -301,9 +352,11 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
         broadcastIntent.putExtra("from", trip.getStartPoint());
         broadcastIntent.putExtra("to", trip.getEndPoint());
         broadcastIntent.putExtra("alarmKey", trip.getAlarmKey());
+
         pendingIntent = PendingIntent.getBroadcast(AddTrip.this, trip.getAlarmKey(), broadcastIntent, 0);
         alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
     }
 
     @Override
@@ -377,13 +430,19 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
     }
     @Override
     public void addTrip() {
-        addTripPresenter.addTrip(tripName.getText().toString().trim(),
-                startPoint.getText().toString().trim(),
-                endPoint.getText().toString().trim(),
-                timerText.getText().toString().trim(),
-                calenderText.getText().toString().trim(),
-                "upComing",
-                direction_text,
-                repeating_text);
+
+        if(compareToNotify()){
+            addTripPresenter.addTrip(tripName.getText().toString().trim(),
+                    startPoint.getText().toString().trim(),
+                    endPoint.getText().toString().trim(),
+                    timerText.getText().toString().trim(),
+                    calenderText.getText().toString().trim(),
+                    "upComing",
+                    direction_text,
+                    repeating_text);
+        }else{
+            displayMessage("enter correct time");
+        }
+
     }
 }
