@@ -30,9 +30,10 @@
         android:layout_margin="10dp"
         android:autofillHints="@string/AddNote"
         android:ems="10"
+        android:gravity="center"
         android:hint="@string/notecontent_hint"
         android:inputType="textPersonName"
-        android:padding="2dp"
+        android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trip_name_addnotes" />

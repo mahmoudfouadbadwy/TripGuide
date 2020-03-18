@@ -148,7 +148,6 @@ public class Alarm extends AppCompatActivity {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.clock)
                 .setContentTitle("Trip Guide")
-                .setVibrate(new long[]{10000, 10000})
                 .setContentText(" Return to "+AlarmIntent.getExtras().getString("tripName")+" Again :) ")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 // Set the intent that will fire when the user taps the notification
@@ -188,7 +187,6 @@ public class Alarm extends AppCompatActivity {
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .setChannelId(CHANNEL_ID)
-                .setVibrate(new long[]{1000, 1000})
                 .setSmallIcon(R.drawable.clock)
                 .setOngoing(true).build();
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
