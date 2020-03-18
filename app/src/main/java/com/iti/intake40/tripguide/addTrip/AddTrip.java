@@ -441,7 +441,7 @@ public class AddTrip extends AppCompatActivity implements AddTripContract.AddTri
                     direction_text,
                     repeating_text);
         }else{
-            displayMessage("enter correct time");
+            displayMessage("Please Enter Valid time As 24 Hours");
         }
 
     }
