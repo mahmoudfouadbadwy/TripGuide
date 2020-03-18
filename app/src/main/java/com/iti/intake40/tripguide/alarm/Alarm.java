@@ -203,6 +203,7 @@ public class Alarm extends AppCompatActivity {
         super.onStop();
         stopRing();
         getNotification();
+        finish();
     }
 
     @Override

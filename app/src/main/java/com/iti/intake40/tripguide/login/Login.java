@@ -73,12 +73,13 @@ public class Login extends AppCompatActivity implements LoginContract.LoginView 
 
         //////////////////////////////////
         floginButton=findViewById(R.id.login_button);
-        presenter = new LoginPresenter(this);
+
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                if (checkValidation())
                {
+                   presenter = new LoginPresenter(Login.this);
                    presenter.loginWithEmail(email.getText().toString(),password.getText().toString());
                }
             }
