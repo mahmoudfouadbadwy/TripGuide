@@ -172,7 +172,7 @@ public class HistoryFragment extends Fragment {
 
     private void showMapDialog()
     {
-       // if(_context != null) {
+        if(trips.size()>0 ) {
             final Dialog dialog = new Dialog(getActivity());
             ViewGroup viewGroup_Dialog = view.findViewById(R.id.drawer_layout);
             LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -190,7 +190,9 @@ public class HistoryFragment extends Fragment {
             dialog.setTitle("Map");
             dialog.setCanceledOnTouchOutside(true);
             dialog.show();
-        //}
+        }
+        else
+            Toast.makeText(getActivity(),"There Is No Trips In History",Toast.LENGTH_LONG).show();
     }
 
 
